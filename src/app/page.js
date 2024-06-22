@@ -1,11 +1,15 @@
+'use client'
+
 import Link from 'next/link'
+import Chip from '@mui/material/Chip'
 
 export default function Home() {
   return (
-    <p>
-      This container has a 9:16 aspect ratio, simulating a mobile device screen.
-      This is the welcome placeholder
-      <Link href="/build-dr"> Build Dr. </Link>
-    </p>
+    <>
+      <p>This is the welcome placeholder</p>
+      <Link href="/build-dr">
+        <Chip label="Build Doctor" />
+      </Link>
+    </>
   )
 }
