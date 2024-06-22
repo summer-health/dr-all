@@ -1,12 +1,14 @@
 'use client'
-import { Button } from '@mui/base'
-import { TextareaAutosize } from '@mui/material'
+import LoadingButton from '@mui/lab/LoadingButton'
+import TextField from '@mui/material/TextField'
 import React from 'react'
+import Box from '@mui/material/Box'
 
 export default function OpenAI() {
   const [audioSrc, setAudioSrc] = React.useState(null)
   const [text, setText] = React.useState('')
   const [response, setResponse] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false)
 
   async function playTTS(message) {
     const res = await fetch('/api/openai/tts', {
@@ -20,37 +22,47 @@ export default function OpenAI() {
 
     const url = URL.createObjectURL(blob)
     setAudioSrc(url)
+    setIsLoading(false)
   }
 
   React.useEffect(() => {
     if (response) {
-      playTTS(response)
+      return playTTS(response).finally(() => setIsLoading(false))
     }
   }, [response])
 
   return (
-    <div>
-      <TextareaAutosize
+    <Box component="form" noValidate autoComplete="off">
+      <TextField
+        label="Ask question"
+        multiline
         onChange={(e) => setText(e.target.value)}
         value={text}
       />
-      <Button
+      <LoadingButton
+        variant="contained"
+        loading={isLoading}
         onClick={async () => {
-          const res = await fetch('/api/openai/completion', {
-            method: 'POST',
-            body: JSON.stringify({
-              messages: [{ role: 'user', content: text }],
-            }),
-          })
-          const json = await res.json()
-          setResponse(json.chatCompletion.choices[0].message.content)
-          console.log(response)
+          try {
+            setIsLoading(true)
+            const res = await fetch('/api/openai/completion', {
+              method: 'POST',
+              body: JSON.stringify({
+                messages: [{ role: 'user', content: text }],
+              }),
+            })
+            const json = await res.json()
+            setResponse(json.chatCompletion.choices[0].message.content)
+            console.log(response)
+          } catch {
+            setIsLoading(false)
+          }
         }}
       >
         test
-      </Button>
+      </LoadingButton>
 
       {audioSrc && <audio controls src={audioSrc} autoPlay />}
-    </div>
+    </Box>
   )
 }
