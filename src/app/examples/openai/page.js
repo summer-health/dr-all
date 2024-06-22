@@ -1,4 +1,6 @@
 'use client'
+import { Button } from '@mui/base'
+import { TextareaAutosize } from '@mui/material'
 import React from 'react'
 
 export default function OpenAI() {
@@ -28,8 +30,11 @@ export default function OpenAI() {
 
   return (
     <div>
-      <textarea onChange={(e) => setText(e.target.value)}>{text}</textarea>
-      <button
+      <TextareaAutosize
+        onChange={(e) => setText(e.target.value)}
+        value={text}
+      />
+      <Button
         onClick={async () => {
           const res = await fetch('/api/openai/completion', {
             method: 'POST',
@@ -39,11 +44,11 @@ export default function OpenAI() {
           })
           const json = await res.json()
           setResponse(json.chatCompletion.choices[0].message.content)
-          console.log(json)
+          console.log(response)
         }}
       >
         test
-      </button>
+      </Button>
 
       {audioSrc && <audio controls src={audioSrc} autoPlay />}
     </div>
