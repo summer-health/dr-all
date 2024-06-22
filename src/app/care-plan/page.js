@@ -35,7 +35,9 @@ function Sprites({ count = 5 }) {
     // Handle sprite click here
   }
 
-  return Array.from({ length: count }).map((_, i) => <LightBulb />)
+  return Array.from({ length: count }).map((_, i) => (
+    <LightBulb onClick={handleClick} />
+  ))
 }
 
 export function Scene({ cameraZ }) {
