@@ -3,7 +3,7 @@
 'use client'
 
 import React from 'react'
-import { Modal, Box, Typography } from '@mui/material'
+import { Modal, Box, Typography, Button } from '@mui/material'
 import { useDoctor } from '@/components/context/doctor-context'
 import Avatar from '@mui/material/Avatar'
 
@@ -44,6 +44,17 @@ export default function CarePlanItemModal({
           {carePlan?.name}
         </Typography>
         <Typography>{carePlan?.content}</Typography>
+        <Box sx={{ flexDirection: 'row' }}>
+          <Button onClick={() => handleCloseModal(carePlan, false)}>
+            Close
+          </Button>
+          <Button
+            onClick={() => handleCloseModal(carePlan, true)}
+            variant="contained"
+          >
+            Complete
+          </Button>
+        </Box>
       </Box>
     </Modal>
   )

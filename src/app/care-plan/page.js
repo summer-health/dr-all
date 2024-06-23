@@ -177,13 +177,12 @@ export default function CarePlanApp() {
   }, [rowCount])
 
   const handleItemClick = (carePlan) => {
-    carePlan.visited = true
-    console.log(carePlan)
     setSelectedCarePlan(carePlan)
     setModalOpen(true)
   }
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (carePlan, finished) => {
+    carePlan.visited = finished
     setModalOpen(false)
   }
 
