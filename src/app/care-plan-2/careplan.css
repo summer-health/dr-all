@@ -1,0 +1,16 @@
+/* careplan.css */
+.roadmap-container {
+  background-image: url('/path-repeat.png');
+  background-repeat: repeat-y;
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  overflow: hidden;
+}
+
+.roadmap-item {
+  position: absolute;
+  width: 100px; /* Adjust size as needed */
+  height: 50px; /* Adjust size as needed */
+}

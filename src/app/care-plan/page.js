@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useRef } from 'react'
-
-import { extend, Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Plane, Sprite, PerspectiveCamera } from '@react-three/drei'
+import React, { useRef, useState, useCallback } from 'react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Plane, PerspectiveCamera, useTexture } from '@react-three/drei'
 import * as THREE from 'three'
-import { useState, useCallback } from 'react'
+import { Modal, Box } from '@mui/material'
+import CarePlanItemModal from './CarePlanItemModal'
 
-function LightBulb(props) {
+function Sphere(props) {
   return (
     <mesh {...props}>
       <pointLight castShadow />
@@ -17,36 +17,51 @@ function LightBulb(props) {
   )
 }
 
-function Road() {
+function Road({ offset }) {
+  const texture = useTexture('/path-repeat.png')
+  texture.wrapS = THREE.RepeatWrapping
+  texture.wrapT = THREE.RepeatWrapping
+  texture.repeat.set(1, 20)
   return (
-    <Plane args={[10, 100]} rotation={[-Math.PI / 2, 0, 0]}>
-      <meshBasicMaterial color={0x333333} />
+    <Plane
+      args={[3, 100]}
+      rotation={[-Math.PI / 2, 0, 0]}
+      position={[0, 0, offset]}
+    >
+      <meshBasicMaterial map={texture} transparent={true} />
     </Plane>
   )
 }
 
-function Sprites({ count = 5 }) {
-  const spriteRefs = useRef([])
-  const { scene } = useThree()
-
-  const handleClick = (event) => {
-    event.stopPropagation()
-    console.log('Sprite clicked!', event.object)
-    // Handle sprite click here
-  }
-
-  return Array.from({ length: count }).map((_, i) => (
-    <LightBulb onClick={handleClick} />
-  ))
+function CarePlanItem({ url, position, rotation, scale, onClick }) {
+  const texture = useTexture(url)
+  return (
+    <Plane
+      args={[1, 1]}
+      position={position}
+      rotation={rotation}
+      scale={scale}
+      onClick={onClick}
+    >
+      <meshBasicMaterial map={texture} />
+    </Plane>
+  )
 }
 
-export function Scene({ cameraZ }) {
+function Scene({ cameraZ, carPosition, addMoreRows, onItemClick }) {
   const cameraRef = useRef()
+  const [offsets, setOffsets] = useState([0])
 
   useFrame(() => {
     if (cameraRef.current) {
       cameraRef.current.position.z = cameraZ
-      cameraRef.current.lookAt(0, 0, cameraZ - 35) // Look 35 units ahead of the camera
+      cameraRef.current.position.y = 2
+      cameraRef.current.position.x = 0
+      cameraRef.current.lookAt(0, 0, cameraZ - 20)
+
+      if (cameraZ < -offsets.length * 100 + 50) {
+        addMoreRows()
+      }
     }
   })
 
@@ -57,16 +72,51 @@ export function Scene({ cameraZ }) {
         ref={cameraRef}
         position={[0, 5, cameraZ]}
       />
-      <Road />
-      <Sprites />
+      {offsets.map((offset, i) => (
+        <>
+          <Road key={i} offset={-i * 100} />
+          <CarePlanItem
+            url="/road-texture.png"
+            position={[-5, 2, -10 - i * 100]}
+            rotation={[0, Math.PI / 8, 0]}
+            scale={[3, 3, 1]}
+            onClick={onItemClick}
+          />
+          <CarePlanItem
+            url="/road-texture.png"
+            position={[5, 2, -20 - i * 100]}
+            rotation={[0, Math.PI / 8, 0]}
+            scale={[3, 3, 1]}
+            onClick={onItemClick}
+          />
+          <CarePlanItem
+            url="/road-texture.png"
+            position={[-5, 2, -30 - i * 100]}
+            rotation={[0, Math.PI / 8, 0]}
+            scale={[3, 3, 1]}
+            onClick={onItemClick}
+          />
+          <CarePlanItem
+            url="/road-texture.png"
+            position={[5, 2, -40 - i * 100]}
+            rotation={[0, Math.PI / 8, 0]}
+            scale={[3, 3, 1]}
+            onClick={onItemClick}
+          />
+        </>
+      ))}
+      <Sphere position={carPosition} />
     </>
   )
 }
 
-export default function CarePlan() {
+export default function CarePlanApp() {
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState(0)
-  const [cameraZ, setCameraZ] = useState(15)
+  const [cameraZ, setCameraZ] = useState(10)
+  const [carPosition, setCarPosition] = useState({ x: 0, y: 0.5, z: 0 })
+  const [rowCount, setRowCount] = useState(1)
+  const [modalOpen, setModalOpen] = useState(false)
 
   const handlePointerDown = useCallback((event) => {
     setIsDragging(true)
@@ -81,13 +131,30 @@ export default function CarePlan() {
     (event) => {
       if (isDragging) {
         const dragDelta = event.clientY - dragStart
-        const newZ = cameraZ - dragDelta * 0.1 // Adjust 0.1 to change sensitivity
-        setCameraZ(Math.max(0, newZ)) // Prevent camera from going behind the start of the road
+        const newZ = cameraZ - dragDelta * 0.1
+        setCameraZ(newZ)
+        setCarPosition((prev) => ({
+          ...prev,
+          z: prev.z - dragDelta * 0.1,
+        }))
         setDragStart(event.clientY)
       }
     },
     [isDragging, dragStart, cameraZ]
   )
+
+  const addMoreRows = useCallback(() => {
+    setRowCount(rowCount + 1)
+    setOffsets((prevOffsets) => [...prevOffsets, -prevOffsets.length * 100])
+  }, [rowCount])
+
+  const handleItemClick = () => {
+    setModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setModalOpen(false)
+  }
 
   return (
     <>
@@ -97,8 +164,17 @@ export default function CarePlan() {
         onPointerMove={handlePointerMove}
         onPointerLeave={handlePointerUp}
       >
-        <Scene cameraZ={cameraZ} />
+        <Scene
+          cameraZ={cameraZ}
+          carPosition={carPosition}
+          addMoreRows={addMoreRows}
+          onItemClick={handleItemClick}
+        />
       </Canvas>
+      <CarePlanItemModal
+        modalOpen={modalOpen}
+        handleCloseModal={handleCloseModal}
+      />
     </>
   )
 }

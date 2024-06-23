@@ -3,12 +3,10 @@ generate a new question following the question guidelines below.
 
 Return the output in a JSON schema of the following:
 
-- **Type**: Object
-- **Properties**:
-  - **category** (string): The category of the question asked
-  - **question** (string): The question being asked
-  - **options** (array of string): The possible answers generated
-  - **remaining_categories** (array of string): Remaining categories that have yet to be asked about
+- **category** (string): The category of the question asked
+- **question** (string): The question being asked
+- **options** (array of string): The possible answers generated
+- **remaining_categories** (array of string): Remaining categories that have yet to be asked about
 
 Question Guidelines:
 

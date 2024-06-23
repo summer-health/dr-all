@@ -4,26 +4,13 @@ import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
+import { useDoctor } from '../../components/context/doctor-context'
 
 import { useState, useEffect } from 'react'
 
-const mockQuestion = {
-  question: 'What are your favorite colors?',
-  options: [
-    'Red',
-    'Green',
-    'Blue',
-    'Yellow',
-    'Purple',
-    'Orange',
-    'Pink',
-    'Black',
-    'White',
-  ],
-}
-
 export default function BuildDr() {
   const { logData } = useDebug()
+  const { addQuestion } = useDoctor()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
@@ -60,7 +47,7 @@ export default function BuildDr() {
         { role: 'system', content: system },
         { role: 'user', content: prompt },
       ]
-      const body = { messages }
+      const body = { messages, model: 'gpt-4' }
       fetch('/api/openai/completion', {
         method: 'POST',
         headers: {
@@ -93,6 +80,13 @@ export default function BuildDr() {
     logData({ message: `Answered doctor prompt: ${option}` })
     const currentQuestion = state.currentQuestion
     setState({ ...state, currentQuestion: undefined })
+
+    addQuestion({
+      category: currentQuestion.category,
+      question: currentQuestion.question,
+      answer: option,
+    })
+
     if (currentQuestion.remaining_categories?.length > 0) {
       setPrompt(
         `${prompt}\n\nCategory: ${currentQuestion.category}\nQuestion: ${currentQuestion.question}\nAnswer: ${option}`
