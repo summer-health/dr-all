@@ -34,6 +34,9 @@ export default function RootLayout({ children }) {
                             height: '100vh',
                             maxHeight: '100vh',
                             aspectRatio: '9/16',
+                            backgroundImage: 'url(/background3.png)',
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
                           }}
                         >
                           <div
