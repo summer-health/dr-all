@@ -16,7 +16,6 @@ export async function GET(req) {
 
   const response = await openai.images.generate({
     model: 'dall-e-3',
-    response_format: 'mp3',
     n: 1,
     quality: 'standard',
     response_format: 'b64_json',
