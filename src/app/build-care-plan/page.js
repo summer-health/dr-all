@@ -10,7 +10,7 @@ import { useCarePlan } from '@/components/context/care-plan-context'
 
 export default function BuildCarePlan() {
   const { logData } = useDebug()
-  const { addQuestion } = useCarePlan()
+  const { questions, addQuestion, setCarePlan } = useCarePlan()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
@@ -40,6 +40,18 @@ export default function BuildCarePlan() {
     fetchSystem()
   }, [])
 
+  const finalPrompt = async (answers) => {
+    try {
+      const response = await fetch('/care-plan-final-prompt.txt')
+      const data = await response.text()
+      const finalPrompt = `${data}\n\n${answers}`
+      console.log('asking final prompt', finalPrompt)
+      setPrompt(finalPrompt)
+    } catch (error) {
+      console.error('Error fetching the text file:', error)
+    }
+  }
+
   useEffect(() => {
     if (prompt && system) {
       // make POST call to /api/openai/completion
@@ -67,7 +79,14 @@ export default function BuildCarePlan() {
               data: content,
               message: 'Care plan prompt completion',
             })
-            setState({ ...state, currentQuestion: content })
+            if (Array.isArray(content)) {
+              setCarePlan(content)
+              // done
+              console.log(content)
+              alert('we are done')
+            } else {
+              setState({ ...state, currentQuestion: content })
+            }
           }
         })
         .catch((error) => {
@@ -81,17 +100,22 @@ export default function BuildCarePlan() {
     const currentQuestion = state.currentQuestion
     setState({ ...state, currentQuestion: undefined })
 
-    addQuestion({
-      content: currentQuestion.content,
-      answer: option,
-    })
-
-    if (currentQuestion.remaining_categories?.length > 0) {
+    if (questions.length < 3) {
+      addQuestion({
+        question: currentQuestion.question,
+        content: currentQuestion.content,
+        answer: option,
+      })
       setPrompt(
         `${prompt}\n\nQuestion: ${currentQuestion.question}\nAnswer: ${option}`
       )
     } else {
-      logData({ message: 'Finished care plan prompts' })
+      // final question
+      finalPrompt(
+        questions
+          .map((q) => `Question: ${q.question}\nAnswer: ${q.answer}`)
+          .join('\n\n')
+      )
     }
   }
 

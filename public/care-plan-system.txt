@@ -6,14 +6,22 @@
     1. List a list of care plan items and it’s details for the next 3 months
     2. There should be at least 10 items every month
 
-Return the care plan output in a JSON schema of the following:
+# Family Profile
 
-- **name** (string): The generated care plan name
-- **category** (string): reading or reminder or tasks
-- **date_to_complete** (string): care plan due date. format in ISO string e.g 2024-06-23T05:03:20.642Z
-- **content** (string): Content of the care plan
-- **image_prompt** (string): Dall-E image generate prompt. based on the care plan. example: Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. **content**
+**Family Members:**
 
+- **Rachel** (Mom)
+- **Robin** (Child, born March 5, 2023)
+
+**Robin's Medical Information:**
+
+- **Allergy:** Tuna
+- **Current Medications:** None
+- **Developmental Milestones:** Slight delays in some milestones
+- **Immunization Status:** Mostly up-to-date, with a few pending
+- **Childcare:** Nanny or babysitter
+- **Dietary Concerns:** Specific concerns about diet
+- **Behavioral and Emotional Health:** No observed signs of anxiety, depression, or other mental health issues
 
 # Doctor Profile
 

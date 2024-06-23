@@ -7,7 +7,7 @@ const CarePlanContext = createContext()
 
 export function CarePlanProvider({ children }) {
   const [questions, setQuestions] = useState([])
-  const [carePlan, setCarePlan] = useState(undefined)
+  const [carePlan, setCarePlan] = useState([])
 
   const addQuestion = (question) => {
     setQuestions((prevQuestions) => [...prevQuestions, question])
