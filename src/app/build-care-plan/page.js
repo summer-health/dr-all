@@ -80,9 +80,15 @@ export default function BuildCarePlan() {
               message: 'Care plan prompt completion',
             })
             if (Array.isArray(content)) {
-              setCarePlan(content)
+              const contentWithUrl = content.map((c) => ({
+                ...c,
+                url:
+                  '/api/openai/image?text=' +
+                  encodeURIComponent(c.image_prompt),
+              }))
+              setCarePlan(contentWithUrl)
               // done
-              console.log(content)
+              console.log(contentWithUrl)
               alert('we are done')
             } else {
               setState({ ...state, currentQuestion: content })
@@ -103,7 +109,7 @@ export default function BuildCarePlan() {
     if (questions.length < 3) {
       addQuestion({
         question: currentQuestion.question,
-        content: currentQuestion.content,
+        options: currentQuestion.options,
         answer: option,
       })
       setPrompt(
@@ -113,7 +119,10 @@ export default function BuildCarePlan() {
       // final question
       finalPrompt(
         questions
-          .map((q) => `Question: ${q.question}\nAnswer: ${q.answer}`)
+          .map(
+            (q) =>
+              `Question: ${q.question}\nOptions:${q.options.join('\n')}\nAnswer: ${q.answer}`
+          )
           .join('\n\n')
       )
     }
