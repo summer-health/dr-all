@@ -6,7 +6,8 @@ import React from 'react'
 import { Modal, Box, Typography, Button } from '@mui/material'
 import { useDoctor } from '@/components/context/doctor-context'
 import Avatar from '@mui/material/Avatar'
-
+import Stack from '@mui/material/Stack'
+import FaceIcon from '@mui/icons-material/Face'
 export default function CarePlanItemModal({
   modalOpen,
   handleCloseModal,
