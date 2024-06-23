@@ -2,6 +2,7 @@
 
 import { useDoctor } from '../../components/context/doctor-context'
 import { useEffect, useState } from 'react'
+import { Box, Typography, Card, CardContent, Avatar } from '@mui/material'
 
 export default function GenerateDr() {
   const { questions, setPersona } = useDoctor()
@@ -80,6 +81,7 @@ export default function GenerateDr() {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('Image generation response:', data)
         if (data.url) {
           console.log('Generated Avatar URL:', data.url)
           setAvatarUrl(data.url)
@@ -92,26 +94,39 @@ export default function GenerateDr() {
       })
   }
 
+  console.log('Persona Description:', personaDescription)
+  console.log('Avatar URL:', avatarUrl)
+
   return (
-    <div style={{ padding: '20px' }}>
-      <h2>Generated Doctor Persona</h2>
+    <Box sx={{ padding: 2 }}>
+      <Typography variant="h4" gutterBottom>
+        Generated Doctor Persona
+      </Typography>
       {personaDescription ? (
-        <>
-          <pre>{personaDescription}</pre>
-          {avatarUrl && (
-            <div>
-              <h3>Doctor Avatar</h3>
-              <img
-                src={avatarUrl}
-                alt="Doctor Avatar"
-                style={{ width: '200px', height: '200px' }}
-              />
-            </div>
-          )}
-        </>
+        <Card variant="outlined">
+          <CardContent>
+            <Typography
+              variant="body1"
+              sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
+            >
+              {personaDescription}
+            </Typography>
+            {avatarUrl && (
+              <Box
+                sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}
+              >
+                <Avatar
+                  alt="Doctor Avatar"
+                  src={avatarUrl}
+                  sx={{ width: 200, height: 200 }}
+                />
+              </Box>
+            )}
+          </CardContent>
+        </Card>
       ) : (
-        <p>No persona generated yet.</p>
+        <Typography variant="body1">No persona generated yet.</Typography>
       )}
-    </div>
+    </Box>
   )
 }
