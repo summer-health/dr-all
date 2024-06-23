@@ -1,6 +1,6 @@
 Based on the following responses, generate a brief persona description for the ideal pediatrician in JSON format. The JSON should have a Persona object that includes the following fields:
 
-- Name: The name of the pediatrician that best fits the description(string)
+- Name: The name of the pediatrician (string)
 - Job Title: Always "Pediatrician" (string)
 - Description: A one-paragraph description of the pediatrician (string)
 - Friendliness: A description of the pediatrician's friendliness (string)
@@ -10,6 +10,7 @@ Based on the following responses, generate a brief persona description for the i
 - Communication Style: A description of the pediatrician's communication style (string)
 - Gender: The gender of the pediatrician (string)
 - Ethnicity: The ethnicity of the pediatrician (string)
+- Appearance: A textual description of the pediatrician's appearance for avatar generation (string). The avatar should always be a doctor in a digital animation style with a vibrant, child-friendly aesthetic.
 
 Based on the provided answers, fill in the respective fields:
 QUESTIONS_PLACEHOLDER
@@ -27,7 +28,8 @@ Ensure the JSON is properly formatted and includes all the fields. Here is an ex
     "Professionalism": "Professionally casual approach",
     "Communication Style": "Balanced mix of medical jargon with layman's terms",
     "Gender": "Transgender",
-    "Ethnicity": "African American"
+    "Ethnicity": "African American",
+    "Appearance": "Dr. Lincoln has short curly hair, wears glasses, and often has a warm smile."
   }
 }
 
