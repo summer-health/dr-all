@@ -7,27 +7,7 @@ import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
 import TextInput from '../../components/input/text-input'
 import { useRouter } from 'next/navigation'
-
-const persona = {
-  Name: 'Dr. Emma Washington',
-  'Job Title': 'Pediatrician',
-  Description:
-    "Dr. Emma Washington is a attentive and responsible pediatrician known for her supportive and kind approach towards her patients. Her personality umbrages a comforting and secure aura making the child feel at home. Dr. Washington's casual yet professional way of working, builds a trustworthy environment. Best known for her friendly demeanor, Dr. Washington's patience and ability to attentively listen makes her an epitome of empathy. Her sense of humor is quite popular among her young patients ensuring an easy and calm atmosphere during the visits.",
-  'Doctor Introduction':
-    "Hello there, I'm Dr. Emma Washington, your child's friendly doctor. I'm here to ensure your child's health and happiness with my heartwarming care and comic timings. Be assured, you and your child's worries are my priority.",
-  Friendliness: 'Very friendly and warm presence',
-  Empathy: 'Highly understanding and a great listener',
-  Funniness: 'Easily breaks out light-hearted jokes',
-  Professionalism: 'Professional yet casual approach',
-  'Communication Style':
-    'Smooth communication in simplified medical terminology',
-  Gender: 'Female',
-  Ethnicity: 'Caucasian',
-  Appearance:
-    'Dr. Washington has blonde hair up to her shoulders, wears spectacles and often smiles warmly during conversations.',
-  imageUrl:
-    'https://static.summerhealth.com/images/providers/provider_2AfyzEW74a5V0pIjXABrZU1HxAB/1666051357644/zoidberg.png',
-}
+import { userDoctor } from '../../components/context/doctor-context'
 
 function FamilyInput({ question, onNext }) {
   if (question.inputType === 'TEXT') {
@@ -42,6 +22,7 @@ function FamilyInput({ question, onNext }) {
 }
 
 export default function BuildFamily() {
+  const { persona } = useDoctor()
   const { logData } = useDebug()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
