@@ -151,7 +151,7 @@ export default function GenerateDoctor() {
           // Update persona with avatar URL
           const fullPersona = {
             ...content.Persona,
-            'Image Url': avatarUrl,
+            imageUrl: avatarUrl,
           }
           setPersona(fullPersona)
 

@@ -25,8 +25,8 @@ const persona = {
   Ethnicity: 'Caucasian',
   Appearance:
     'Dr. Washington has blonde hair up to her shoulders, wears spectacles and often smiles warmly during conversations.',
-  'Image Url':
-    'blob:http://localhost:3000/b0c73dfb-bb20-4a93-b328-c85212108b49',
+  imageUrl:
+    'https://static.summerhealth.com/images/providers/provider_2AfyzEW74a5V0pIjXABrZU1HxAB/1666051357644/zoidberg.png',
 }
 
 function FamilyInput({ question, onNext }) {
