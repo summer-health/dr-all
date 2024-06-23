@@ -11,7 +11,7 @@ import { useCarePlan } from '@/components/context/care-plan-context'
 import { useDoctor } from '@/components/context/doctor-context'
 import { useFamily } from '@/components/context/family-context'
 
-const MAX_QUESTIONS = 3
+const MAX_QUESTIONS = 5
 
 export default function BuildCarePlan() {
   const { logData } = useDebug()
