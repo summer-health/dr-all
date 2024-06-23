@@ -17,23 +17,12 @@ Child Medical Information:
 
 - **Birth History:**
     - Birth weight
-    - Gestational age at birth
-    - Type of delivery (vaginal, C-section)
-    - Any complications during pregnancy, labor, or delivery
 - **Previous Medical Conditions:**
     - Chronic conditions (asthma, diabetes, etc.)
     - Allergies (food, medication, environmental)
 - **Current Medications:**
-    - Prescription medications
-    - Over-the-counter medications
 
-### **3. Developmental History:**
-
-- **Milestones:**
-    - Sitting, crawling, walking, talking
-    - Fine motor skills
-
-### **4. Immunization Records:**
+### **3. Immunization Records:**
 
 - **Vaccinations:**
     - Up-to-date immunization status
