@@ -4,7 +4,6 @@ import { useEffect, useState, useRef } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Grow from '@mui/material/Grow'
-import CircularProgress from '@mui/material/CircularProgress'
 import Avatar from '@mui/material/Avatar'
 import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
@@ -15,16 +14,31 @@ export default function GenerateDoctor() {
   const { questions, persona, setPersona } = useDoctor()
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [promptTemplate, setPromptTemplate] = useState(null)
+  const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
+  const [avatarPromptTemplate, setAvatarPromptTemplate] = useState(null)
+  const [loadingTexts, setLoadingTexts] = useState([
+    'Generating your perfect doctor...',
+  ])
+  const [isLoading, setIsLoading] = useState(true)
   const hasGeneratedPersona = useRef(false)
+  const hasGeneratedLoadingTexts = useRef(false)
 
   useEffect(() => {
     const fetchPromptTemplate = async () => {
       try {
-        const response = await fetch('/generate-doctor-prompt.txt')
-        const data = await response.text()
-        setPromptTemplate(data)
+        const [generateDoctorPrompt, loadingTextsPrompt, avatarPrompt] =
+          await Promise.all([
+            fetch('/generate-doctor-prompt.txt').then((res) => res.text()),
+            fetch('/generate-loading-texts-prompt.txt').then((res) =>
+              res.text()
+            ),
+            fetch('/generate-avatar-prompt.txt').then((res) => res.text()),
+          ])
+        setPromptTemplate(generateDoctorPrompt)
+        setLoadingTextsTemplate(loadingTextsPrompt)
+        setAvatarPromptTemplate(avatarPrompt)
       } catch (error) {
-        console.error('Error fetching the text file:', error)
+        console.error('Error fetching the text files:', error)
       }
     }
 
@@ -32,7 +46,52 @@ export default function GenerateDoctor() {
   }, [])
 
   useEffect(() => {
-    if (hasGeneratedPersona.current || !promptTemplate) return
+    const generateLoadingTexts = async () => {
+      if (hasGeneratedLoadingTexts.current || !loadingTextsTemplate) return
+      hasGeneratedLoadingTexts.current = true
+
+      const loadingPrompt = loadingTextsTemplate.replace(
+        'QUESTIONS_PLACEHOLDER',
+        questions.map((q) => `${q.category}: ${q.answer}`).join(', ')
+      )
+
+      const body = {
+        messages: [{ role: 'user', content: loadingPrompt }],
+        model: 'gpt-4',
+      }
+
+      try {
+        const response = await fetch('/api/openai/completion', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body),
+        })
+        const data = await response.json()
+        console.log('Loading texts:', data)
+
+        if (data.chatCompletion?.choices?.[0]?.message?.content) {
+          const generatedTexts = data.chatCompletion.choices[0].message.content
+            .split('\n')
+            .filter((text) => text && !/^\d+\.\s/.test(text))
+            .map((text) => text.replace(/^"|"$/g, '').trim())
+          setLoadingTexts(generatedTexts)
+          logData({
+            id: data.chatCompletion.id,
+            data: generatedTexts,
+            message: 'Generated loading text',
+          })
+        }
+      } catch (error) {
+        console.error('Error generating loading texts:', error)
+      }
+    }
+
+    generateLoadingTexts()
+  }, [questions, loadingTextsTemplate, logData])
+
+  useEffect(() => {
+    if (hasGeneratedPersona.current || !promptTemplate || !avatarPromptTemplate)
+      return
     hasGeneratedPersona.current = true
 
     const generatePersona = async () => {
@@ -58,7 +117,7 @@ export default function GenerateDoctor() {
           body: JSON.stringify(body),
         })
         const data = await response.json()
-        console.log('Final API Response data:', data)
+        console.log('Initial persona:', data)
 
         if (data.chatCompletion?.choices?.[0]?.message?.content) {
           let content
@@ -72,23 +131,38 @@ export default function GenerateDoctor() {
             }
           }
 
+          // Set the persona without the avatar URL first
+          setPersona(content.Persona)
+
           // Generate avatar using DALL-E
+          const avatarPrompt = avatarPromptTemplate
+            .replace('GENDER_PLACEHOLDER', content.Persona.Gender)
+            .replace('ETHNICITY_PLACEHOLDER', content.Persona.Ethnicity)
+
           const avatarResponse = await fetch(
-            `/api/openai/image?prompt=${encodeURIComponent(content.Persona.Appearance)}`
+            `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
           )
-          console.log('generating avatar')
           const avatarBlob = await avatarResponse.blob()
           const avatarUrl = URL.createObjectURL(avatarBlob)
 
           content.Persona['Image Url'] = avatarUrl
-          setPersona(content.Persona)
           setAvatarUrl(avatarUrl)
+
+          // Update persona with avatar URL
+          const fullPersona = {
+            ...content.Persona,
+            'Image Url': avatarUrl,
+          }
+          setPersona(fullPersona)
 
           logData({
             id: data.chatCompletion.id,
-            data: content.Persona,
-            message: 'Generated doctor description with avatar',
+            data: fullPersona,
+            message: 'Generated doctor persona with avatar',
           })
+
+          // Set loading to false after everything is ready
+          setIsLoading(false)
         }
       } catch (error) {
         console.error('Error generating doctor description:', error)
@@ -96,7 +170,7 @@ export default function GenerateDoctor() {
     }
 
     generatePersona()
-  }, [promptTemplate, questions, logData, setPersona])
+  }, [promptTemplate, avatarPromptTemplate, questions, logData, setPersona])
 
   return (
     <Stack
@@ -106,7 +180,9 @@ export default function GenerateDoctor() {
       justifyContent="center"
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
-      {persona ? (
+      {isLoading ? (
+        <LoadingState texts={loadingTexts} />
+      ) : (
         <Stack spacing={2} alignItems="center">
           {avatarUrl ? (
             <Avatar
@@ -126,35 +202,43 @@ export default function GenerateDoctor() {
             {persona['Doctor Introduction']}
           </Typography>
         </Stack>
-      ) : (
-        <Stack
-          spacing={2}
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-          }}
-        >
-          <CircularProgress />
-          <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
-            <Typography variant="h6" sx={{ mt: 2 }}>
-              Generating your ideal pediatrician...
-            </Typography>
-          </Grow>
-          <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={2000}>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              Please wait while we gather the best qualities...
-            </Typography>
-          </Grow>
-          <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={3000}>
-            <Typography variant="body2" sx={{ mt: 1 }}>
-              Almost there...
-            </Typography>
-          </Grow>
-        </Stack>
       )}
+    </Stack>
+  )
+}
+
+function LoadingState({ texts }) {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % texts.length)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [texts.length])
+
+  return (
+    <Stack
+      spacing={2}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+      }}
+    >
+      <img
+        src="/doctor-generator.gif"
+        alt="Loading..."
+        style={{ width: 150, height: 150 }}
+      />
+      <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
+        <Typography variant="h6" sx={{ mt: 2 }}>
+          {texts[index]}
+        </Typography>
+      </Grow>
     </Stack>
   )
 }
