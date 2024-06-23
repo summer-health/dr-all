@@ -2,6 +2,7 @@
 
 import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
+import Avatar from '@mui/material/Avatar'
 import { useState, useEffect } from 'react'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
@@ -114,6 +115,7 @@ export default function BuildFamily() {
       )
     } else {
       logData({ message: 'Finished family prompts', data: familyQuestions })
+      router.push('/build-family-summary')
       // router.push('/generate-dr')
     }
   }
@@ -127,7 +129,13 @@ export default function BuildFamily() {
       sx={{ width: '100%', padding: 2, height: '100%', paddingTop: 10 }}
     >
       <Stack spacing={2} alignItems="center" sx={{ width: '100%' }}>
-        <FaceIcon style={{ fontSize: '100px' }} />
+        {persona?.imageUrl && (
+          <Avatar
+            src={persona.imageUrl}
+            alt={persona.Name}
+            sx={{ width: 100, height: 100 }}
+          />
+        )}
 
         {/* If state.currentQuestion exists, choose component based on currentQuestion.inputType */}
         {state.currentQuestion && (

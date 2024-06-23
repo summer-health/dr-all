@@ -9,17 +9,17 @@ const DoctorContext = createContext()
 
 export function DoctorProvider({ children }) {
   const [questions, setQuestions] = useState([])
-  const [persona, setPersona] = useState(load('doctorPersona'))
+  const [persona, setPersona] = useState(undefined)
 
   const addQuestion = (question) => {
     setQuestions((prevQuestions) => [...prevQuestions, question])
   }
 
-  useEffect(() => {
-    if (persona) {
-      store('doctorPersona', persona)
-    }
-  }, [persona])
+  // useEffect(() => {
+  //   if (persona) {
+  //     store('doctorPersona', persona)
+  //   }
+  // }, [persona])
 
   return (
     <DoctorContext.Provider

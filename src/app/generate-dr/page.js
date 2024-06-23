@@ -108,13 +108,13 @@ export default function GenerateDoctor() {
             `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
           )
           const avatarBlob = await avatarResponse.blob()
-          blobToBase64(avatarBlob)
-            .then((base64String) => {
-              setPersona({ ...persona, doctorAvatar: base64String })
-            })
-            .catch((error) => {
-              console.error('Error converting Blob to Base64:', error)
-            })
+          // blobToBase64(avatarBlob)
+          //   .then((base64String) => {
+          //     // setPersona({ ...content.Persona, doctorAvatar: base64String })
+          //   })
+          //   .catch((error) => {
+          //     console.error('Error converting Blob to Base64:', error)
+          //   })
           const avatarUrl = URL.createObjectURL(avatarBlob)
 
           // content.Persona['Image Url'] = avatarUrl
@@ -123,6 +123,7 @@ export default function GenerateDoctor() {
           // Update persona with avatar URL
           const fullPersona = {
             ...content.Persona,
+            imageUrl: avatarUrl,
           }
           setPersona(fullPersona)
 

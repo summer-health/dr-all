@@ -83,6 +83,7 @@ export default function BuildFamily() {
               message: 'Family summary completion',
             })
             setFamily({ summary: content })
+            router.push('/build-care-plan')
           }
         })
         .catch((error) => {
