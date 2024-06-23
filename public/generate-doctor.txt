@@ -1,1 +1,0 @@
-Based on the following responses, generate a brief persona description for the ideal pediatrician in JSON format. The Persona object should include the name, job title (Pediatrician), one-paragraph description, and the responses to each category:

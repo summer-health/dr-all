@@ -1,0 +1,34 @@
+Based on the following responses, generate a brief persona description for the ideal pediatrician in JSON format. The JSON should have a Persona object that includes the following fields:
+
+- Name: The name of the pediatrician that best fits the description(string)
+- Job Title: Always "Pediatrician" (string)
+- Description: A one-paragraph description of the pediatrician (string)
+- Friendliness: A description of the pediatrician's friendliness (string)
+- Empathy: A description of the pediatrician's empathy (string)
+- Funniness: A description of the pediatrician's sense of humor (string)
+- Professionalism: A description of the pediatrician's professionalism (string)
+- Communication Style: A description of the pediatrician's communication style (string)
+- Gender: The gender of the pediatrician (string)
+- Ethnicity: The ethnicity of the pediatrician (string)
+
+Based on the provided answers, fill in the respective fields:
+QUESTIONS_PLACEHOLDER
+
+Ensure the JSON is properly formatted and includes all the fields. Here is an example of the expected output:
+
+{
+  "Persona": {
+    "Name": "Dr. Alex Lincoln",
+    "Job Title": "Pediatrician",
+    "Description": "Dr. Alex Lincoln is a transgender African American pediatrician known for their calm and soothing presence that seems to naturally put both parents and children at ease. While maintaining their professionalism, Dr. Lincoln perfectly mingles empathy into their interactions, demonstrating an understanding that is both casual and professional. Their serious demeanor is laced with a hint of humor simply breaking the typical stereotype of a 'strict doctor'. Their unique communication style marries medical jargon with layman's terms, ensuring parents are on the same page regarding their child's health. Their professionalism shines forth in a casually refreshing fashion, setting them apart in their field.",
+    "Friendliness": "A calm, soothing presence",
+    "Empathy": "Casually understanding, but professional",
+    "Funniness": "Serious with a hint of humor",
+    "Professionalism": "Professionally casual approach",
+    "Communication Style": "Balanced mix of medical jargon with layman's terms",
+    "Gender": "Transgender",
+    "Ethnicity": "African American"
+  }
+}
+
+Please ensure the response adheres strictly to this structure. Return the result only as a JSON object without any additional text or explanation.
