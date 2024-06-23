@@ -12,8 +12,7 @@ import { useDoctor } from '@/components/context/doctor-context'
 
 export default function GenerateDoctor() {
   const { logData } = useDebug()
-  const { questions, setPersona } = useDoctor()
-  const [persona, setLocalPersona] = useState(null)
+  const { questions, persona, setPersona } = useDoctor()
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [promptTemplate, setPromptTemplate] = useState(null)
   const hasGeneratedPersona = useRef(false)
@@ -33,9 +32,7 @@ export default function GenerateDoctor() {
   }, [])
 
   useEffect(() => {
-    if (hasGeneratedPersona.current || !promptTemplate) {
-      return
-    }
+    if (hasGeneratedPersona.current || !promptTemplate) return
     hasGeneratedPersona.current = true
 
     const generatePersona = async () => {
@@ -49,19 +46,20 @@ export default function GenerateDoctor() {
         content: filledPrompt,
       }
 
-      const messages = [descriptionPrompt]
-      const body = { messages, model: 'gpt-4' }
+      const body = {
+        messages: [descriptionPrompt],
+        model: 'gpt-4',
+      }
 
       try {
         const response = await fetch('/api/openai/completion', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(body),
         })
         const data = await response.json()
         console.log('Final API Response data:', data)
+
         if (data.chatCompletion?.choices?.[0]?.message?.content) {
           let content
           try {
@@ -74,25 +72,23 @@ export default function GenerateDoctor() {
             }
           }
 
-          logData({
-            id: data.chatCompletion.id,
-            data: content,
-            message: 'Generated doctor description',
-          })
-
-          setPersona(content.Persona)
-          setLocalPersona(content.Persona)
-
           // Generate avatar using DALL-E
           const avatarResponse = await fetch(
-            `/api/openai/image?prompt=${encodeURIComponent(content.Persona.Appearance + ' digital animation style with a vibrant, child-friendly aesthetic')}`
+            `/api/openai/image?prompt=${encodeURIComponent(content.Persona.Appearance)}`
           )
+          console.log('generating avatar')
           const avatarBlob = await avatarResponse.blob()
           const avatarUrl = URL.createObjectURL(avatarBlob)
+
+          content.Persona['Image Url'] = avatarUrl
+          setPersona(content.Persona)
           setAvatarUrl(avatarUrl)
 
-          console.log('avatarUrl:', avatarUrl)
-          console.log('avatarResponse:', avatarResponse)
+          logData({
+            id: data.chatCompletion.id,
+            data: content.Persona,
+            message: 'Generated doctor description with avatar',
+          })
         }
       } catch (error) {
         console.error('Error generating doctor description:', error)
@@ -126,7 +122,9 @@ export default function GenerateDoctor() {
           <Typography variant="h4" component="h1">
             {persona.Name}
           </Typography>
-          <Typography variant="body1">{persona.Description}</Typography>
+          <Typography variant="body1" sx={{ marginTop: 2 }}>
+            {persona['Doctor Introduction']}
+          </Typography>
         </Stack>
       ) : (
         <Stack

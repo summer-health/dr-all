@@ -34,7 +34,12 @@ export default function RootLayout({ children }) {
                           aspectRatio: '9/16',
                         }}
                       >
-                        <div className="h-full overflow-y-auto p-4">
+                        <div
+                          className="h-full overflow-y-auto p-4"
+                          style={{
+                            position: 'relative',
+                          }}
+                        >
                           {children}
                         </div>
                       </div>
@@ -43,7 +48,12 @@ export default function RootLayout({ children }) {
                     {/* Right column */}
 
                     <div className="w-full md:w-1/2">
-                      <h2 className="text-xl font-semibold mb-4">Debug</h2>
+                      <h2
+                        className="text-xl font-semibold mb-4"
+                        style={{ color: '#FFF' }}
+                      >
+                        Debug
+                      </h2>
                       <div className="bg-white rounded-lg shadow-md p-4">
                         <DebugLog />
                       </div>
