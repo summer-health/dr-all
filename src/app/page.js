@@ -124,9 +124,22 @@ const mockFamilyQuestions = [
   },
 ]
 
+const mockFamilySummary = `Rachel: Mom
+Robin: Child, born April 1, 2024
+
+# Child's Medical Information:
+* Allergy:Tuna
+* Current Medications: None
+* Developmental Milestones: Slight delays in some milestones
+* Immunization Status: Mostly up-to-date, with a few pending
+* Childcare: Nanny or babysitter
+* Dietary Concerns: Specific concerns about diet
+* Behavioral and Emotional Health: No observed signs of anxiety, depression, or other mental health issues
+`
+
 export default function Home() {
   const { persona, setPersona } = useDoctor()
-  const { family, familyQuestions, setFamilyQuestions } = useFamily()
+  const { family, familyQuestions, setFamilyQuestions, setFamily } = useFamily()
   const router = useRouter()
   return (
     <Stack
@@ -164,7 +177,7 @@ export default function Home() {
           Jump to family summary
         </Button>
         <Button
-          disabled={!family?.summary}
+          disabled={!family?.summary || !persona?.imageUrl}
           size="small"
           variant="text"
           onClick={() => router.push('/build-care-plan')}
@@ -190,7 +203,7 @@ export default function Home() {
         <Button
           size="small"
           variant="text"
-          onClick={() => alert('not impelmented')}
+          onClick={() => setFamily({ summary: mockFamilySummary })}
         >
           Load mock family data
         </Button>
