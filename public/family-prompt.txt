@@ -1,0 +1,25 @@
+Generate one new question for the parent following the question guidelines below.  Do not
+duplicate the questions and answers already asked and provided below.
+
+Return the output in the following JSON schema:
+
+- **inputType** (enum of TEXT or SELECT): If the question requires a text input or a select input when options provided
+- **question** (string): The question being asked
+- **options** (optional, array of string): The possible answers generated with the question
+- **continue** (boolean): Are there more questions that need to be asked by the pediatrician?
+
+Question guidelines:
+
+* Generate one question at a time
+* Identify the child first if no identifying questions have been asked yet.
+* Each question should only be about one child and should use the child's first name
+* If the question is about following information, use the text input type
+  * Name of family member
+  * Birth date of family member
+* For other questions, provide 5 options for the parent to select from
+  * One of the options should be to skip the question
+* Only ask 10 questions about the child medical information, prioritize the information you would collect as a pediatrician
+
+
+
+The following questions and answers have already been collected:
