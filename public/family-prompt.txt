@@ -11,8 +11,9 @@ Return the output in the following JSON schema:
 Question guidelines:
 
 * Generate one question at a time
-* Identify the child first if no identifying questions have been asked yet.
-* Each question should only be about one child and should use the child's first name
+* If we haven't asked the parent their name, ask first before asking about the child.
+* If we haven't asked identifying information about the child, ask before medical information.
+* Each question should be tailored to the parent and use the child's first name
 * If the question is about following information, use the text input type
   * Name of family member
   * Birth date of family member

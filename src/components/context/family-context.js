@@ -5,10 +5,23 @@ import { createContext, useContext, useState } from 'react'
 const FamilyContext = createContext()
 
 export function FamilyProvider({ children }) {
-  const [family, setFamily] = useState([])
+  const [family, setFamily] = useState({})
+  const [familyQuestions, setFamilyQuestions] = useState([])
+
+  const addFamilyQuestion = (question) => {
+    setFamilyQuestions((prevQuestions) => [...prevQuestions, question])
+  }
 
   return (
-    <FamilyContext.Provider value={{ family, setFamily }}>
+    <FamilyContext.Provider
+      value={{
+        family,
+        setFamily,
+        familyQuestions,
+        setFamilyQuestions,
+        addFamilyQuestion,
+      }}
+    >
       {children}
     </FamilyContext.Provider>
   )
