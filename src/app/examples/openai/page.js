@@ -11,12 +11,7 @@ export default function OpenAI() {
   const [isLoading, setIsLoading] = React.useState(false)
 
   async function playTTS(message) {
-    const res = await fetch('/api/openai/tts', {
-      method: 'POST',
-      body: JSON.stringify({
-        message,
-      }),
-    })
+    const res = await fetch(`/api/openai/tts?message=${message}`)
     const arrayBuffer = await res.arrayBuffer()
     const blob = new Blob([arrayBuffer], { type: 'audio/mp3' })
 
@@ -32,37 +27,39 @@ export default function OpenAI() {
   }, [response])
 
   return (
-    <Box component="form" noValidate autoComplete="off">
-      <TextField
-        label="Ask question"
-        multiline
-        onChange={(e) => setText(e.target.value)}
-        value={text}
-      />
-      <LoadingButton
-        variant="contained"
-        loading={isLoading}
-        onClick={async () => {
-          try {
-            setIsLoading(true)
-            const res = await fetch('/api/openai/completion', {
-              method: 'POST',
-              body: JSON.stringify({
-                messages: [{ role: 'user', content: text }],
-              }),
-            })
-            const json = await res.json()
-            setResponse(json.chatCompletion.choices[0].message.content)
-            console.log(response)
-          } catch {
-            setIsLoading(false)
-          }
-        }}
-      >
-        test
-      </LoadingButton>
+    <>
+      <Box component="form" noValidate autoComplete="off">
+        <TextField
+          label="Ask question"
+          multiline
+          onChange={(e) => setText(e.target.value)}
+          value={text}
+        />
+        <LoadingButton
+          variant="contained"
+          loading={isLoading}
+          onClick={async () => {
+            try {
+              setIsLoading(true)
+              const res = await fetch('/api/openai/completion', {
+                method: 'POST',
+                body: JSON.stringify({
+                  messages: [{ role: 'user', content: text }],
+                }),
+              })
+              const json = await res.json()
+              setResponse(json.chatCompletion.choices[0].message.content)
+              console.log(response)
+            } catch {
+              setIsLoading(false)
+            }
+          }}
+        >
+          test
+        </LoadingButton>
 
-      {audioSrc && <audio controls src={audioSrc} autoPlay />}
-    </Box>
+        {audioSrc && <audio controls src={audioSrc} autoPlay />}
+      </Box>
+    </>
   )
 }
