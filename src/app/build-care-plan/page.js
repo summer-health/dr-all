@@ -25,6 +25,8 @@ Robin: Child, born April 1, 2024
 * Behavioral and Emotional Health: No observed signs of anxiety, depression, or other mental health issues
 `
 
+const MAX_QUESTIONS = 3
+
 export default function BuildCarePlan() {
   const { logData } = useDebug()
   const { questions, addQuestion, setCarePlan } = useCarePlan()
@@ -143,7 +145,7 @@ export default function BuildCarePlan() {
     const currentQuestion = state.currentQuestion
     setState({ ...state, currentQuestion: undefined })
 
-    if (questions.length < 3) {
+    if (questions.length < MAX_QUESTIONS) {
       addQuestion({
         question: currentQuestion.question,
         options: currentQuestion.options,
@@ -154,14 +156,15 @@ export default function BuildCarePlan() {
       )
     } else {
       // final question
-      finalPrompt(
-        questions
-          .map(
-            (q) =>
-              `Question: ${q.question}\nOptions:${q.options.join('\n')}\nAnswer: ${q.answer}`
-          )
-          .join('\n\n')
-      )
+      router.push('/generate-care-plan')
+      // finalPrompt(
+      //   questions
+      //     .map(
+      //       (q) =>
+      //         `Question: ${q.question}\nOptions:${q.options.join('\n')}\nAnswer: ${q.answer}`
+      //     )
+      //     .join('\n\n')
+      // )
     }
   }
 

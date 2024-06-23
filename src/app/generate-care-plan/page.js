@@ -8,38 +8,56 @@ import Avatar from '@mui/material/Avatar'
 import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
-import { store } from '@/libs/localStorage'
 import { useCarePlan } from '@/components/context/care-plan-context'
+import { useRouter } from 'next/navigation'
+import { useFamily } from '@/components/context/family-context'
+
+const defaultPersona = `Dr. Emma Lee is a friendly and empathetic female pediatrician of Asian ethnicity. She greets her patients warmly by their first names, creating a welcoming and personal atmosphere. With a casual tone, she makes her patients feel at ease while ensuring clear and detailed communication, using layman's terms with occasional medical jargon for accuracy. Dr. Lee is known for her light-hearted humor, often incorporating puns and light jokes to make the experience enjoyable. She always acknowledges and validates her patients' feelings and provides words of encouragement, especially during challenging times. Her explanations are thorough yet not overwhelming, and she consistently asks follow-up questions to confirm understanding, ensuring her patients and their families feel well-informed and cared for.`
+
+const defaultFamily = `Rachel: Mom
+Robin: Child, born April 1, 2024
+
+# Child's Medical Information:
+* Allergy:Tuna
+* Current Medications: None
+* Developmental Milestones: Slight delays in some milestones
+* Immunization Status: Mostly up-to-date, with a few pending
+* Childcare: Nanny or babysitter
+* Dietary Concerns: Specific concerns about diet
+* Behavioral and Emotional Health: No observed signs of anxiety, depression, or other mental health issues
+`
 
 export default function GenerateCarePlan() {
   const { logData } = useDebug()
-  const { questions, persona, setPersona } = useDoctor()
-  const { carePlan } = useCarePlan()
-  const [avatarUrl, setAvatarUrl] = useState(null)
-  const [promptTemplate, setPromptTemplate] = useState(null)
+  const { persona } = useDoctor()
+  const { family } = useFamily()
+  const { questions, setCarePlan } = useCarePlan()
+  const [finalPrompt, setFinalPrompt] = useState(null)
+  const [systemPrompt, setSystemPrompt] = useState(null)
   const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
-  const [avatarPromptTemplate, setAvatarPromptTemplate] = useState(null)
   const [loadingTexts, setLoadingTexts] = useState([
     'Generating your perfect care plan...',
   ])
   const [isLoading, setIsLoading] = useState(true)
-  const hasGeneratedPersona = useRef(false)
+  const router = useRouter()
+
+  const hasGeneratedCarePlan = useRef(false)
   const hasGeneratedLoadingTexts = useRef(false)
 
   useEffect(() => {
     const fetchPromptTemplate = async () => {
       try {
-        const [generateDoctorPrompt, loadingTextsPrompt, avatarPrompt] =
+        const [loadedSystemPrompt, generateFinalPrompt, loadingTextsPrompt] =
           await Promise.all([
-            fetch('/generate-doctor-prompt.txt').then((res) => res.text()),
+            fetch('/care-plan-system.txt').then((res) => res.text()),
+            fetch('/care-plan-final-prompt.txt').then((res) => res.text()),
             fetch('/generate-loading-texts-prompt.txt').then((res) =>
               res.text()
             ),
-            fetch('/generate-avatar-prompt.txt').then((res) => res.text()),
           ])
-        setPromptTemplate(generateDoctorPrompt)
+        setSystemPrompt(loadedSystemPrompt)
+        setFinalPrompt(generateFinalPrompt)
         setLoadingTextsTemplate(loadingTextsPrompt)
-        setAvatarPromptTemplate(avatarPrompt)
       } catch (error) {
         console.error('Error fetching the text files:', error)
       }
@@ -49,10 +67,12 @@ export default function GenerateCarePlan() {
   }, [])
 
   useEffect(() => {
-    const generateLoadingTexts = async () => {
-      if (hasGeneratedLoadingTexts.current || !loadingTextsTemplate) return
-      hasGeneratedLoadingTexts.current = true
+    if (hasGeneratedLoadingTexts.current || !loadingTextsTemplate) {
+      return
+    }
+    hasGeneratedLoadingTexts.current = true
 
+    const generateLoadingTexts = async () => {
       const loadingPrompt = loadingTextsTemplate.replace(
         'QUESTIONS_PLACEHOLDER',
         questions.map((q) => `${q.category}: ${q.answer}`).join(', ')
@@ -93,25 +113,41 @@ export default function GenerateCarePlan() {
   }, [questions, loadingTextsTemplate, logData])
 
   useEffect(() => {
-    if (hasGeneratedPersona.current || !promptTemplate || !avatarPromptTemplate)
+    if (hasGeneratedCarePlan.current || !systemPrompt || !finalPrompt) {
       return
-    hasGeneratedPersona.current = true
+    }
+    hasGeneratedCarePlan.current = true
 
-    const generatePersona = async () => {
-      const filledPrompt = promptTemplate.replace(
-        'QUESTIONS_PLACEHOLDER',
-        questions.map((q) => `${q.category}: ${q.answer}`).join(', ')
-      )
-
-      const descriptionPrompt = {
-        role: 'user',
-        content: filledPrompt,
+    const generateCarePlan = async () => {
+      let finalSystemPrompt = systemPrompt
+      if (persona) {
+        const text = Object.entries(persona).reduce((acc, [key, value]) => {
+          if (key === 'doctorAvatar') return acc
+          return `${acc}\n- ${key}: ${value}`
+        }, '')
+        console.log('doctor', text)
+        finalSystemPrompt = finalSystemPrompt.replace('{doctorPersona}', text)
+      } else {
+        finalSystemPrompt = finalSystemPrompt.replace(
+          '{doctorPersona}',
+          defaultPersona
+        )
+      }
+      if (family) {
+        const text = Object.entries(family).reduce((acc, [key, value]) => {
+          return `${acc}\n- ${key}: ${value}`
+        }, '')
+        console.log('family', text)
+        finalSystemPrompt = finalSystemPrompt.replace('{family}', text)
+      } else {
+        finalSystemPrompt = finalSystemPrompt.replace('{family}', defaultFamily)
       }
 
-      const body = {
-        messages: [descriptionPrompt],
-        model: 'gpt-4',
-      }
+      const messages = [
+        { role: 'system', content: finalSystemPrompt },
+        { role: 'user', content: finalPrompt },
+      ]
+      const body = { messages, model: 'gpt-4o' }
 
       try {
         const response = await fetch('/api/openai/completion', {
@@ -120,7 +156,7 @@ export default function GenerateCarePlan() {
           body: JSON.stringify(body),
         })
         const data = await response.json()
-        console.log('Initial persona:', data)
+        console.log('care plan', data)
 
         if (data.chatCompletion?.choices?.[0]?.message?.content) {
           let content
@@ -135,46 +171,25 @@ export default function GenerateCarePlan() {
           }
 
           // Set the persona without the avatar URL first
-          setPersona(content.Persona)
-
-          // Generate avatar using DALL-E
-          const avatarPrompt = avatarPromptTemplate
-            .replace('GENDER_PLACEHOLDER', content.Persona.Gender)
-            .replace('ETHNICITY_PLACEHOLDER', content.Persona.Ethnicity)
-
-          const avatarResponse = await fetch(
-            `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
-          )
-          const avatarBlob = await avatarResponse.blob()
-          store('doctorAvatar', avatarBlob)
-          const avatarUrl = URL.createObjectURL(avatarBlob)
-
-          content.Persona['Image Url'] = avatarUrl
-          setAvatarUrl(avatarUrl)
-
-          // Update persona with avatar URL
-          const fullPersona = {
-            ...content.Persona,
-            'Image Url': avatarUrl,
-          }
-          setPersona(fullPersona)
+          setCarePlan(content)
 
           logData({
             id: data.chatCompletion.id,
-            data: fullPersona,
-            message: 'Generated doctor persona with avatar',
+            data: content,
+            message: 'Generated carePlan',
           })
 
           // Set loading to false after everything is ready
           setIsLoading(false)
+          router.push('/care-plan')
         }
       } catch (error) {
         console.error('Error generating doctor description:', error)
       }
     }
 
-    generatePersona()
-  }, [promptTemplate, avatarPromptTemplate, questions, logData, setPersona])
+    generateCarePlan()
+  }, [finalPrompt, questions, logData, setCarePlan])
 
   return (
     <Stack
@@ -184,29 +199,7 @@ export default function GenerateCarePlan() {
       justifyContent="center"
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
-      {isLoading ? (
-        <LoadingState texts={loadingTexts} />
-      ) : (
-        <Stack spacing={2} alignItems="center">
-          {avatarUrl ? (
-            <Avatar
-              src={avatarUrl}
-              alt={persona.Name}
-              sx={{ width: 100, height: 100 }}
-            />
-          ) : (
-            <Avatar sx={{ width: 100, height: 100 }}>
-              <FaceIcon style={{ fontSize: 60 }} />
-            </Avatar>
-          )}
-          <Typography variant="h4" component="h1">
-            {persona.Name}
-          </Typography>
-          <Typography variant="body1" sx={{ marginTop: 2 }}>
-            {persona['Doctor Introduction']}
-          </Typography>
-        </Stack>
-      )}
+      {isLoading && <LoadingState texts={loadingTexts} />}
     </Stack>
   )
 }
