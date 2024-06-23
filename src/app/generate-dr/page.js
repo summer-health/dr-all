@@ -148,9 +148,9 @@ export default function GenerateDoctor() {
     <Stack
       spacing={2}
       direction="row"
-      alignItems="center"
+      alignItems="start"
       justifyContent="center"
-      sx={{ width: '100%', padding: 2, height: '100%' }}
+      sx={{ width: '100%', padding: 2, height: '100%', paddingTop: 10 }}
     >
       {isLoading ? (
         <LoadingState
