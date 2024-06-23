@@ -11,7 +11,7 @@ generate a new question following the question guidelines below.
 * Only ask up to 2 questions for each type of medical information
 * Only ask up to 10 questions to capture all the information you need to build a care plan, prioritize the information you think is most important to the care plan
 
-# You must return the output in a JSON of the following:
+#Your output should able to parse with javascript JSON.parse() method without any error. don't include like markdown ```json
 
 - **question** (string): The question being asked
 - **options** (array of string): The possible answers generated

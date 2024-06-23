@@ -3,21 +3,12 @@
 import { useEffect, useState, useRef } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Grow from '@mui/material/Grow'
 import Avatar from '@mui/material/Avatar'
 import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
-import LoadingState from '@/components/loading-page'
 import { store } from '@/libs/localStorage'
-
-const blobToBase64 = (blob) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
-    reader.onerror = () => reject(new Error('Failed to convert Blob to Base64'))
-    reader.readAsDataURL(blob)
-  })
-}
 
 export default function GenerateDoctor() {
   const { logData } = useDebug()
@@ -26,12 +17,15 @@ export default function GenerateDoctor() {
   const [promptTemplate, setPromptTemplate] = useState(null)
   const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
   const [avatarPromptTemplate, setAvatarPromptTemplate] = useState(null)
+  const [loadingTexts, setLoadingTexts] = useState([
+    'Generating your perfect doctor...',
+  ])
   const [isLoading, setIsLoading] = useState(true)
   const hasGeneratedPersona = useRef(false)
   const hasGeneratedLoadingTexts = useRef(false)
 
   useEffect(() => {
-    const fetchPromptTemplates = async () => {
+    const fetchPromptTemplate = async () => {
       try {
         const [generateDoctorPrompt, loadingTextsPrompt, avatarPrompt] =
           await Promise.all([
@@ -49,7 +43,7 @@ export default function GenerateDoctor() {
       }
     }
 
-    fetchPromptTemplates()
+    fetchPromptTemplate()
   }, [])
 
   useEffect(() => {
@@ -94,7 +88,7 @@ export default function GenerateDoctor() {
     }
 
     generateLoadingTexts()
-  }, [loadingTextsTemplate, logData])
+  }, [questions, loadingTextsTemplate, logData])
 
   useEffect(() => {
     if (hasGeneratedPersona.current || !promptTemplate || !avatarPromptTemplate)
@@ -150,21 +144,16 @@ export default function GenerateDoctor() {
             `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
           )
           const avatarBlob = await avatarResponse.blob()
-          blobToBase64(avatarBlob)
-            .then((base64String) => {
-              setPersona({ ...persona, doctorAvatar: base64String })
-            })
-            .catch((error) => {
-              console.error('Error converting Blob to Base64:', error)
-            })
+          store('doctorAvatar', avatarBlob)
           const avatarUrl = URL.createObjectURL(avatarBlob)
 
-          // content.Persona['Image Url'] = avatarUrl
+          content.Persona['Image Url'] = avatarUrl
           setAvatarUrl(avatarUrl)
 
           // Update persona with avatar URL
           const fullPersona = {
             ...content.Persona,
+            'Image Url': avatarUrl,
           }
           setPersona(fullPersona)
 
@@ -194,12 +183,7 @@ export default function GenerateDoctor() {
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
       {isLoading ? (
-        <LoadingState
-          loadingTextsTemplate={loadingTextsTemplate}
-          logData={logData}
-          src="/doctor-generator.gif"
-          initialText="Generating your perfect doctor..."
-        />
+        <LoadingState texts={loadingTexts} />
       ) : (
         <Stack spacing={2} alignItems="center">
           {avatarUrl ? (
@@ -221,6 +205,42 @@ export default function GenerateDoctor() {
           </Typography>
         </Stack>
       )}
+    </Stack>
+  )
+}
+
+function LoadingState({ texts }) {
+  const [index, setIndex] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % texts.length)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [texts.length])
+
+  return (
+    <Stack
+      spacing={2}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+      }}
+    >
+      <img
+        src="/doctor-generator.gif"
+        alt="Loading..."
+        style={{ width: 150, height: 150 }}
+      />
+      <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
+        <Typography variant="h6" sx={{ mt: 2 }}>
+          {texts[index]}
+        </Typography>
+      </Grow>
     </Stack>
   )
 }

@@ -3,14 +3,19 @@
 import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
 import Select from '../../components/input/select'
+import Avatar from '@mui/material/Avatar'
 import { useDebug } from '../../components/context/debug-context'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useCarePlan } from '@/components/context/care-plan-context'
+import { useDoctor } from '@/components/context/doctor-context'
+
+const defaultPersona = `Dr. Emma Lee is a friendly and empathetic female pediatrician of Asian ethnicity. She greets her patients warmly by their first names, creating a welcoming and personal atmosphere. With a casual tone, she makes her patients feel at ease while ensuring clear and detailed communication, using layman's terms with occasional medical jargon for accuracy. Dr. Lee is known for her light-hearted humor, often incorporating puns and light jokes to make the experience enjoyable. She always acknowledges and validates her patients' feelings and provides words of encouragement, especially during challenging times. Her explanations are thorough yet not overwhelming, and she consistently asks follow-up questions to confirm understanding, ensuring her patients and their families feel well-informed and cared for.`
 
 export default function BuildCarePlan() {
   const { logData } = useDebug()
   const { questions, addQuestion, setCarePlan } = useCarePlan()
+  const { persona } = useDoctor()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
@@ -31,7 +36,16 @@ export default function BuildCarePlan() {
       try {
         const response = await fetch('/care-plan-system.txt')
         const data = await response.text()
-        setSystem(data)
+        if (persona) {
+          const text = Object.entries(persona).reduce((acc, [key, value]) => {
+            if (key === 'doctorAvatar') return acc
+            return `${acc}\n- ${key}: ${value}`
+          }, '')
+          console.log(text)
+          setSystem(data.replace('{doctorPersona}', text))
+        } else {
+          setSystem(data.replace('{doctorPersona}', defaultPersona))
+        }
       } catch (error) {
         console.error('Error fetching the text file:', error)
       }
@@ -81,9 +95,12 @@ export default function BuildCarePlan() {
               message: 'Care plan prompt completion',
             })
             if (Array.isArray(content)) {
-              setCarePlan(content)
+              const plan = content.sort(
+                (a, b) => b.date_to_complete - a.date_to_complete
+              )
+              setCarePlan(plan)
               // done
-              console.log(content)
+              console.log(plan)
               router.push('/care-plan')
             } else {
               setState({ ...state, currentQuestion: content })
@@ -133,7 +150,17 @@ export default function BuildCarePlan() {
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
       <Stack spacing={2} alignItems="center">
-        <FaceIcon style={{ fontSize: '100px' }} />
+        {persona && persona.Name && persona.doctorAvatar ? (
+          <Avatar
+            src={persona.doctorAvatar}
+            alt={persona.Name}
+            sx={{ width: 100, height: 100 }}
+          />
+        ) : (
+          <Avatar sx={{ width: 100, height: 100 }}>
+            <FaceIcon style={{ fontSize: 60 }} />
+          </Avatar>
+        )}
 
         {state.currentQuestion && (
           <Select

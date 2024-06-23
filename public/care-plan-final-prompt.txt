@@ -1,38 +1,32 @@
 Given the provided questions that have already been asked and answered 
-return the care plan output in a JSON.
+Return the care plan output in a JSON.
 Your output should able to parse with javascript JSON.parse() method without any error. don't include like markdown ```json
 
 - **name** (string): The generated care plan name
 - **category** (string): reading or reminder or tasks
 - **date_to_complete** (string): care plan due date. format in ISO string e.g 2024-06-23T05:03:20.642Z
-- **content** (string): Content of the care plan
+- **content** (string): description of the care plan item in the tone of the doctor profile
 - **type** (string): one of the value from Type list can explain this care plan
 
 
 # Type list
-check-up
-immunization
-nutrition
-developmental
-allergy
-sleep
-safety
+activity
+allergies
 behavioral
-parental-support
-physical-activity
-mental-health
-sensory-development
-social-skills
-fine-motor-skills
-gross-motor-skills
+check-up
+developmental
 language-and-communication
+mental-health
+motor-skills
+nutrition
 parent-child-bonding
-parent-education
-environmental-health
+seasonal-health
+sensory-development
+sleep
+social-skills
+technology-screen-time
 teething-and-oral-health
-sibling-integration
-seasonal-health-tips
-technology-and-screen-time
+vaccine
 
 # example
 
@@ -40,5 +34,8 @@ technology-and-screen-time
   {"name":"reading a book" "category": "reading" "date_to_complete": "2024-06-23T05:03:20.642Z" "content": "blog post of reading a book" "type":"behavioral"}
   {"name":"give a vaccine" "category": "reminder" "date_to_complete": "2024-06-23T05:03:20.642Z" "content": "explanation of the vaccine" "type":"immunization"}
 ]
+
+# doctor profile
+Dr. Emma Lee is a friendly and empathetic female pediatrician of Asian ethnicity. She greets her patients warmly by their first names, creating a welcoming and personal atmosphere. With a casual tone, she makes her patients feel at ease while ensuring clear and detailed communication, using layman's terms with occasional medical jargon for accuracy. Dr. Lee is known for her light-hearted humor, often incorporating puns and light jokes to make the experience enjoyable. She always acknowledges and validates her patients' feelings and provides words of encouragement, especially during challenging times. Her explanations are thorough yet not overwhelming, and she consistently asks follow-up questions to confirm understanding, ensuring her patients and their families feel well-informed and cared for.
 
 Questions already asked:

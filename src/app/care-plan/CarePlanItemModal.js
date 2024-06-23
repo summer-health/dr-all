@@ -4,12 +4,15 @@
 
 import React from 'react'
 import { Modal, Box, Typography } from '@mui/material'
+import { useDoctor } from '@/components/context/doctor-context'
+import Avatar from '@mui/material/Avatar'
 
 export default function CarePlanItemModal({
   modalOpen,
   handleCloseModal,
   carePlan,
 }) {
+  const { persona } = useDoctor()
   return (
     <Modal open={modalOpen} onClose={handleCloseModal}>
       <Box
@@ -25,6 +28,13 @@ export default function CarePlanItemModal({
           p: 4,
         }}
       >
+        {persona?.doctorAvatar && persona.Name && (
+          <Avatar
+            src={persona.doctorAvatar}
+            alt={persona.Name}
+            sx={{ width: 100, height: 100 }}
+          />
+        )}
         <Typography
           variant="h6"
           sx={{
@@ -33,6 +43,7 @@ export default function CarePlanItemModal({
         >
           {carePlan?.name}
         </Typography>
+        <Typography>{carePlan?.content}</Typography>
       </Box>
     </Modal>
   )
