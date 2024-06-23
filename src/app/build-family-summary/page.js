@@ -2,7 +2,7 @@
 
 import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
-import { CircularProgress } from '@mui/material'
+import { Grow, Avatar, CircularProgress, Typography } from '@mui/material'
 import { useState, useEffect } from 'react'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
@@ -10,6 +10,7 @@ import TextInput from '../../components/input/text-input'
 import { useRouter } from 'next/navigation'
 
 import { useFamily } from '../../components/context/family-context'
+import { useDoctor } from '@/components/context/doctor-context'
 
 function FamilyInput({ question, onNext }) {
   if (question.inputType === 'TEXT') {
@@ -25,6 +26,7 @@ function FamilyInput({ question, onNext }) {
 
 export default function BuildFamily() {
   const { familyQuestions, setFamily, family } = useFamily()
+  const { persona, avatar } = useDoctor()
   const [loading, isLoading] = useState(true)
 
   const { logData } = useDebug()
@@ -101,7 +103,22 @@ export default function BuildFamily() {
       sx={{ width: '100%', padding: 2, height: '100%', paddingTop: 10 }}
     >
       <Stack spacing={2} alignItems="center" sx={{ width: '100%' }}>
-        <CircularProgress />
+        {persona && persona.Name && avatar ? (
+          <Avatar
+            src={avatar}
+            alt={persona.Name}
+            sx={{ width: 100, height: 100 }}
+          />
+        ) : (
+          <Avatar sx={{ width: 100, height: 100 }}>
+            <FaceIcon style={{ fontSize: 60 }} />
+          </Avatar>
+        )}
+        <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
+          <Typography variant="h6" align="center" sx={{ mt: 2 }}>
+            Get ready to start building your care plan!
+          </Typography>
+        </Grow>
       </Stack>
     </Stack>
   )
