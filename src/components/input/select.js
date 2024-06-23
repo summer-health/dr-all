@@ -2,6 +2,15 @@ import Stack from '@mui/material/Stack'
 import Chip from '@mui/material/Chip'
 
 export default function Select({ question, onNext }) {
+  if (!question || !question.question || !question.options) {
+    return (
+      <>
+        <p>Invalid question:</p>
+        <pre>{JSON.stringify(question, null, 2)}</pre>
+      </>
+    )
+  }
+
   return (
     <>
       <p>{question.question}</p>

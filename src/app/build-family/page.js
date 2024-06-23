@@ -4,7 +4,7 @@ import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
 import Fade from '@mui/material/Fade'
 import { useState, useEffect } from 'react'
-import Select from '../../components/select'
+import Select from '../../components/input/select'
 
 const mockQuestion = {
   question: 'Who is your favorite?',

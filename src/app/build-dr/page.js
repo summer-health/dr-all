@@ -2,9 +2,10 @@
 
 import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
-import MultiSelect from '../../components/multi-select'
+import Select from '../../components/input/select'
+import { useDebug } from '../../components/context/debug-context'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const mockQuestion = {
   question: 'What are your favorite colors?',
@@ -22,6 +23,85 @@ const mockQuestion = {
 }
 
 export default function BuildDr() {
+  const { logData } = useDebug()
+  const [prompt, setPrompt] = useState(undefined)
+  const [system, setSystem] = useState(undefined)
+  const [state, setState] = useState([])
+
+  useEffect(() => {
+    const fetchPrompt = async () => {
+      try {
+        const response = await fetch('/doctor-prompt.txt')
+        const data = await response.text()
+        setPrompt(data)
+      } catch (error) {
+        console.error('Error fetching the text file:', error)
+      }
+    }
+
+    const fetchSystem = async () => {
+      try {
+        const response = await fetch('/doctor-system.txt')
+        const data = await response.text()
+        setSystem(data)
+      } catch (error) {
+        console.error('Error fetching the text file:', error)
+      }
+    }
+
+    fetchPrompt()
+    fetchSystem()
+  }, [])
+
+  useEffect(() => {
+    if (prompt && system) {
+      // make POST call to /api/openai/completion
+      const messages = [
+        { role: 'system', content: system },
+        { role: 'user', content: prompt },
+      ]
+      const body = { messages }
+      fetch('/api/openai/completion', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.chatCompletion?.choices?.[0]?.message?.content) {
+            const content = JSON.parse(
+              data.chatCompletion.choices[0].message.content
+            )
+
+            logData({
+              id: data.chatCompletion.id,
+              data: content,
+              message: 'Doctor prompt completion',
+            })
+            setState({ ...state, currentQuestion: content })
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error)
+        })
+    }
+  }, [prompt, system])
+
+  const answerQuestion = (option) => {
+    logData({ message: `Answered doctor prompt: ${option}` })
+    const currentQuestion = state.currentQuestion
+    setState({ ...state, currentQuestion: undefined })
+    if (currentQuestion.remaining_categories?.length > 0) {
+      setPrompt(
+        `${prompt}\n\nCategory: ${currentQuestion.category}\nQuestion: ${currentQuestion.question}\nAnswer: ${option}`
+      )
+    } else {
+      logData({ message: 'Finished doctor prompts' })
+    }
+  }
+
   return (
     <Stack
       spacing={2}
@@ -32,13 +112,15 @@ export default function BuildDr() {
     >
       <Stack spacing={2} alignItems="center">
         <FaceIcon style={{ fontSize: '100px' }} />
-        <MultiSelect
-          question={mockQuestion}
-          onNext={(selectedOptions) => {
-            alert('Works')
-            console.log('selectedOptions', selectedOptions)
-          }}
-        />
+
+        {state.currentQuestion && (
+          <Select
+            question={state.currentQuestion}
+            onNext={(option) => {
+              answerQuestion(option)
+            }}
+          />
+        )}
       </Stack>
     </Stack>
   )
