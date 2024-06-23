@@ -10,23 +10,23 @@ Your output should able to parse with javascript JSON.parse() method without any
 
 
 # Type list
-check-up
-vaccine
-nutrition
-developmental
-allergies
-sleep
-behavioral
 activity
-mental-health
-sensory-development
-social-skills
-motor-skills
+allergies
+behavioral
+check-up
+developmental
 language-and-communication
+mental-health
+motor-skills
+nutrition
 parent-child-bonding
-teething-and-oral-health
 seasonal-health
+sensory-development
+sleep
+social-skills
 technology-screen-time
+teething-and-oral-health
+vaccine
 
 # example
 

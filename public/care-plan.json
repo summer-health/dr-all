@@ -1,210 +1,219 @@
 [
   {
-      "name": "Monthly Well-Child Check-Up",
+      "name": "Tuna Allergy Management",
       "category": "reminder",
-      "date_to_complete": "2024-06-01T10:00:00.000Z",
-      "content": "Regular monthly well-child check-up to monitor growth and development.",
-      "type": "check-up",
-      "position": -5.712849190931819
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Make sure to avoid tuna completely in Robin's diet. Inform all caregivers, read food labels diligently, and monitor for any reactions.",
+      "type": "allergies"
   },
   {
-      "name": "Hepatitis A Immunization",
+      "name": "Vegetarian Diet Planning",
+      "category": "nutrition",
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Create a balanced vegetarian meal plan for Robin, ensuring she gets all necessary nutrients for growth and development.",
+      "type": "nutrition"
+  },
+  {
+      "name": "Encouraging Gross Motor Skills",
+      "category": "tasks",
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Incorporate activities like crawling, standing, and walking with assistance to help Robin improve gross motor skills.",
+      "type": "motor-skills"
+  },
+  {
+      "name": "Pending Immunizations",
       "category": "reminder",
-      "date_to_complete": "2024-06-15T10:00:00.000Z",
-      "content": "Administer pending Hepatitis A vaccine.",
-      "type": "immunization",
-      "position": 0.0757033180512714
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Schedule appointments for Robin's pending immunizations to ensure she's fully up-to-date.",
+      "type": "vaccine"
   },
   {
-      "name": "Introducing Mixed Vegetables",
-      "category": "tasks",
-      "date_to_complete": "2024-06-20T10:00:00.000Z",
-      "content": "Introduce and encourage a variety of mixed vegetables into Robin's diet to ensure balanced nutrition.",
-      "type": "nutrition",
-      "position": -0.48889682025859216
-  },
-  {
-      "name": "Developmental Milestones Assessment",
-      "category": "tasks",
-      "date_to_complete": "2024-06-25T10:00:00.000Z",
-      "content": "Assess and monitor any slight developmental delays to ensure Robin is on track.",
-      "type": "developmental",
-      "position": -1.6527090629846661
-  },
-  {
-      "name": "Weekly Physical Activity",
-      "category": "tasks",
-      "date_to_complete": "2024-06-29T10:00:00.000Z",
-      "content": "Ensure Robin engages in physical activities at least once a week.",
-      "type": "physical-activity",
-      "position": 6.534041769597614
-  },
-  {
-      "name": "Safety Check of Childcare Environment",
-      "category": "tasks",
-      "date_to_complete": "2024-06-30T10:00:00.000Z",
-      "content": "Evaluate and ensure the safety of Robin’s environment while under nanny care.",
-      "type": "safety",
-      "position": 4.552614719014819
-  },
-  {
-      "name": "Sleep Routine Establishment",
-      "category": "tasks",
-      "date_to_complete": "2024-07-01T10:00:00.000Z",
-      "content": "Establish a consistent sleep routine to support healthy sleep habits.",
-      "type": "sleep",
-      "position": 7.201751971523748
-  },
-  {
-      "name": "Parental Nutrition Education",
-      "category": "tasks",
-      "date_to_complete": "2024-07-05T10:00:00.000Z",
-      "content": "Provide educational resources for Rachel on balanced nutrition for Robin.",
-      "type": "parent-education",
-      "position": 4.96778929602241
-  },
-  {
-      "name": "Allergy Management Plan",
-      "category": "tasks",
-      "date_to_complete": "2024-07-10T10:00:00.000Z",
-      "content": "Create a management plan to avoid exposure to tuna and handle any accidental ingestions.",
-      "type": "allergy",
-      "position": -4.601823923865229
-  },
-  {
-      "name": "Language and Communication Development",
-      "category": "tasks",
-      "date_to_complete": "2024-07-15T10:00:00.000Z",
-      "content": "Support language and communication skills through engaging activities.",
-      "type": "language-and-communication",
-      "position": -9.71772677198667
-  },
-  {
-      "name": "Monthly Well-Child Check-Up",
+      "name": "Nanny/Babysitter Briefing",
       "category": "reminder",
-      "date_to_complete": "2024-07-01T10:00:00.000Z",
-      "content": "Regular monthly well-child check-up to monitor growth and development.",
-      "type": "check-up",
-      "position": 3.7446639818854734
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Update the nanny or babysitter on Robin's latest care plan, dietary needs, and allergy precautions.",
+      "type": "parent-child-bonding"
   },
   {
-      "name": "Encourage More Vegetable Intake",
+      "name": "Post-Mealtime Walks",
       "category": "tasks",
-      "date_to_complete": "2024-07-05T10:00:00.000Z",
-      "content": "Continue encouraging Robin to eat more vegetables.",
-      "type": "nutrition",
-      "position": 8.875757138528474
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Take short, gentle walks around the neighborhood to help Robin's digestion and encourage physical activity.",
+      "type": "nutrition"
   },
   {
-      "name": "Monitor and Document Physical Activity",
-      "category": "tasks",
-      "date_to_complete": "2024-07-10T10:00:00.000Z",
-      "content": "Ensure regular weekly physical activity and document his progress.",
-      "type": "physical-activity",
-      "position": -0.7160206823382644
+      "name": "Daily Reading Sessions",
+      "category": "reading",
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Spend 15-20 minutes reading age-appropriate books to Robin to enhance language and cognitive skills.",
+      "type": "language-and-communication"
   },
   {
-      "name": "Assess and Support Developmental Milestones",
-      "category": "tasks",
-      "date_to_complete": "2024-07-15T10:00:00.000Z",
-      "content": "Re-assess and support Robin’s developmental milestones especially related to any slight delays.",
-      "type": "developmental",
-      "position": 8.40751510885973
-  },
-  {
-      "name": "Environmental Allergy Check",
-      "category": "tasks",
-      "date_to_complete": "2024-07-20T10:00:00.000Z",
-      "content": "Check for and remove any potential allergens in Robin's environment besides tuna.",
-      "type": "environmental-health",
-      "position": -2.1402955630441234
-  },
-  {
-      "name": "Establish Consistent Nanny Communication",
-      "category": "tasks",
-      "date_to_complete": "2024-07-25T10:00:00.000Z",
-      "content": "Establish consistent communication with nanny for updates on Robin’s daily activities and well-being.",
-      "type": "parental-support",
-      "position": -6.273621016087256
-  },
-  {
-      "name": "Gross Motor Skills Enhancement",
-      "category": "tasks",
-      "date_to_complete": "2024-07-30T10:00:00.000Z",
-      "content": "Incorporate activities to enhance Robin’s gross motor skills.",
-      "type": "gross-motor-skills",
-      "position": 8.033036421792083
-  },
-  {
-      "name": "Develop a Bedtime Routine",
-      "category": "tasks",
-      "date_to_complete": "2024-08-01T10:00:00.000Z",
-      "content": "Fine-tune Robin's bedtime routine for better sleep quality.",
-      "type": "sleep",
-      "position": -3.270014233256169
-  },
-  {
-      "name": "Parent-Child Bonding Activities",
-      "category": "tasks",
-      "date_to_complete": "2024-08-05T10:00:00.000Z",
-      "content": "Incorporate daily bonding activities like reading together or playing interactive games.",
-      "type": "parent-child-bonding",
-      "position": -5.698763057866216
-  },
-  {
-      "name": "Monthly Well-Child Check-Up",
+      "name": "Nutritional Supplements",
       "category": "reminder",
-      "date_to_complete": "2024-08-01T10:00:00.000Z",
-      "content": "Regular monthly well-child check-up to monitor growth and development.",
-      "type": "check-up",
-      "position": 8.442124250779798
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Discuss the need for any nutritional supplements with your pediatrician to support Robin's vegetarian diet.",
+      "type": "nutrition"
   },
   {
-      "name": "Continue Nutrition Plan",
-      "category": "tasks",
-      "date_to_complete": "2024-08-05T10:00:00.000Z",
-      "content": "Continuously encourage a balanced diet and monitor Robin’s intake of vegetables and other essential nutrients.",
-      "type": "nutrition",
-      "position": 7.615783759189277
+      "name": "Vaccination Reminder",
+      "category": "reminder",
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Keep track of Robin’s vaccination schedule and make timely appointments for upcoming shots.",
+      "type": "vaccine"
   },
   {
-      "name": "Behavioral Observation and Support",
+      "name": "Sensory Play Fun",
       "category": "tasks",
-      "date_to_complete": "2024-08-10T10:00:00.000Z",
-      "content": "Observe and support Robin's behavioral development, ensuring he is emotionally healthy.",
-      "type": "behavioral",
-      "position": -6.195914170039378
+      "date_to_complete": "2024-04-30T00:00:00.000Z",
+      "content": "Engage Robin in sensory play activities like playing with textured toys or exploring safe household items to bolster sensory development.",
+      "type": "sensory-development"
   },
   {
-      "name": "Fine Motor Skills Activities",
-      "category": "tasks",
-      "date_to_complete": "2024-08-15T10:00:00.000Z",
-      "content": "Introduce activities such as drawing or playing with blocks to enhance fine motor skills.",
-      "type": "fine-motor-skills",
-      "position": 8.326931552711095
+      "name": "Regular Check-Ups",
+      "category": "reminder",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Schedule regular check-ups with Dr. Fun to monitor Robin's growth and address any health concerns promptly.",
+      "type": "check-up"
   },
   {
-      "name": "Review and Document Developmental Progress",
-      "category": "tasks",
-      "date_to_complete": "2024-08-20T10:00:00.000Z",
-      "content": "Review Robin’s developmental progress and document any changes or improvements.",
-      "type": "developmental",
-      "position": -1.2498076805686598
+      "name": "New Immunizations",
+      "category": "reminder",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Ensure Robin receives any new immunizations required for her age bracket.",
+      "type": "vaccine"
   },
   {
-      "name": "Encourage Social Skills",
+      "name": "Family Activities",
       "category": "tasks",
-      "date_to_complete": "2024-08-25T10:00:00.000Z",
-      "content": "Engage Robin in social activities to develop social skills.",
-      "type": "social-skills",
-      "position": -3.8764671519749294
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Plan fun family activities that promote movement and interaction, like a trip to the park or backyard playtime.",
+      "type": "parent-child-bonding"
   },
   {
-      "name": "Monitor Sleep Progress",
+      "name": "Hydration Check",
+      "category": "reminder",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Ensure Robin stays hydrated, especially during sunny weather. Aim for frequent sips of water throughout the day.",
+      "type": "seasonal-health"
+  },
+  {
+      "name": "Outdoor Playtime",
       "category": "tasks",
-      "date_to_complete": "2024-08-30T10:00:00.000Z",
-      "content": "Monitor and document Robin’s sleep progress and routine.",
-      "type": "sleep",
-      "position": 3.131906003383298
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Encourage outdoor playtime in safe, supervised areas to further boost Robin's gross motor skills and social interaction.",
+      "type": "motor-skills"
+  },
+  {
+      "name": "Healthy Snacks",
+      "category": "nutrition",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Prepare a variety of healthy, vegetarian snacks for Robin, balancing taste and nutrition.",
+      "type": "nutrition"
+  },
+  {
+      "name": "Allergy Awareness",
+      "category": "tasks",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Teach Robin to understand her allergy in an age-appropriate way, so she can start recognizing safe and unsafe foods.",
+      "type": "allergies"
+  },
+  {
+      "name": "New Activity Introduction",
+      "category": "task",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Introduce a new stimulating activity each week, like building blocks or musical toys, to enhance cognitive skills.",
+      "type": "developmental"
+  },
+  {
+      "name": "Tracking Development",
+      "category": "reminder",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Keep a journal of Robin's progress in her gross motor skills to discuss during the next pediatric visit.",
+      "type": "developmental"
+  },
+  {
+      "name": "Playdate Planning",
+      "category": "tasks",
+      "date_to_complete": "2024-05-31T00:00:00.000Z",
+      "content": "Plan playdates with other children to encourage social interaction and friendship building.",
+      "type": "social-skills"
+  },
+  {
+      "name": "Dental Care Routine",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Establish a gentle dental care routine, including brushing with baby-safe toothpaste and using soft-bristle brushes.",
+      "type": "teething-and-oral-health"
+  },
+  {
+      "name": "New Milestone Goals",
+      "category": "developmental",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Set new developmental milestone goals for Robin, like unsupported walking or simple words.",
+      "type": "developmental"
+  },
+  {
+      "name": "Structured Play",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Incorporate structured playtime with specific toys and activities to promote fine and gross motor skill development.",
+      "type": "developmental"
+  },
+  {
+      "name": "Sleep Routine Check",
+      "category": "reminder",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Review and optimize Robin's sleep routine to ensure she gets adequate rest for her growth and development.",
+      "type": "sleep"
+  },
+  {
+      "name": "Language Games",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Play language-based games to support Robin's speech and cognitive development.",
+      "type": "language-and-communication"
+  },
+  {
+      "name": "Hydration Check-in",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Make sure Robin stays well-hydrated, especially during the warm months.",
+      "type": "seasonal-health"
+  },
+  {
+      "name": "Activity Diversity",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Introduce new and diverse activities to Robin's playtime to stimulate various developmental areas.",
+      "type": "developmental"
+  },
+  {
+      "name": "Monitoring Dietary Intake",
+      "category": "nutrition",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Keep track of Robin's daily dietary intake to ensure she's receiving balanced nutrition.",
+      "type": "nutrition"
+  },
+  {
+      "name": "Summer Health Tips",
+      "category": "seasonal-health",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Follow summer health tips to keep Robin cool and healthy, like wearing breathable clothing and having plenty of fluids.",
+      "type": "seasonal-health"
+  },
+  {
+      "name": "Check on Physical Milestones",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Track progress on Robin's physical milestones and encourage her with supportive activities.",
+      "type": "motor-skills"
+  },
+  {
+      "name": "Interactive Story Time",
+      "category": "reading",
+      "date_to_complete": "2024-06-30T00:00:00.000Z",
+      "content": "Engage in interactive story time by using different voices and encouraging Robin to point out characters.",
+      "type": "language-and-communication"
   }
 ]
