@@ -16,7 +16,11 @@ Question Guidelines:
   * Question should be non-verbose
   * Question should survey qualities and not start with "How"
 * Ask one question at a time, each question you ask should only be about one {criteria}.
-* Generate around 5 possible qualitative descriptor answers to the question
+* Generate around 5 possible qualitative descriptor answers to the questions
+* Possible qualitative descriptor answers should be fun
+* Gender should be direct and not fun 
+* Ethnicity should be direct, not fun and just list the ethnicity 
+* Each answer should only contain up to 5 words 
 * Generate at least one answer with an opposing view to the category.
 
 Questions already asked:

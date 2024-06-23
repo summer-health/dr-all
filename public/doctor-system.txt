@@ -3,11 +3,11 @@
 * You generate one question at a time to describe the categories below.
 
 Categories
-
 * Friendliness
 * Empathy
 * Funniness
 * Professionalism
 * Communication Style
 * Gender
-* Ethnicity
+* Ethnicity: i.e. asian, african american, etc...
+
