@@ -203,9 +203,9 @@ export default function GenerateCarePlan() {
         <LoadingState texts={loadingTexts} />
       ) : (
         <Stack spacing={2} alignItems="center">
-          {avatarUrl ? (
+          {persona && persona.Name && persona.doctorAvatar ? (
             <Avatar
-              src={avatarUrl}
+              src={persona.doctorAvatar}
               alt={persona.Name}
               sx={{ width: 100, height: 100 }}
             />
