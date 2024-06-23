@@ -4,11 +4,13 @@ import { useEffect, useState, useRef } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
 import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
 import LoadingState from '@/components/loading-page'
 import { store } from '@/libs/localStorage'
+import { useRouter } from 'next/navigation'
 
 const blobToBase64 = (blob) => {
   return new Promise((resolve, reject) => {
@@ -20,6 +22,7 @@ const blobToBase64 = (blob) => {
 }
 
 export default function GenerateDoctor() {
+  const router = useRouter()
   const { logData } = useDebug()
   const { questions, persona, setPersona } = useDoctor()
   const [avatarUrl, setAvatarUrl] = useState(null)
@@ -217,8 +220,17 @@ export default function GenerateDoctor() {
             {persona.Name}
           </Typography>
           <Typography variant="body1" sx={{ marginTop: 2 }}>
-            {persona['Doctor Introduction']}
+            {persona.Introduction}
+            HERE
           </Typography>
+
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => router.push('/build-family')}
+          >
+            Build Family
+          </Button>
         </Stack>
       )}
     </Stack>

@@ -201,7 +201,7 @@ export default function GenerateDoctor() {
             {persona.Name}
           </Typography>
           <Typography variant="body1" sx={{ marginTop: 2 }}>
-            {persona['Doctor Introduction']}
+            {persona.Introduction}
           </Typography>
         </Stack>
       )}
