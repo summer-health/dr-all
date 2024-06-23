@@ -120,12 +120,11 @@ function Scene({ cameraZ, onItemClick, items }) {
         const imageUrl = carePlanTypes.includes(carePlan.type)
           ? `/care-plan/${carePlan.type}.png`
           : '/care-plan/developmental.png'
-        console.log('----', imageUrl)
         return (
           <>
             <CarePlanSprite
               url={imageUrl}
-              position={[-3, 3, 0 - index * repeatLength]}
+              position={[carePlan.position, 3, 0 - index * repeatLength]}
               onClick={() => onItemClick(carePlan)}
             />
             {/* <CarePlanSprite

@@ -33,6 +33,7 @@ export default function CarePlanItemModal({
         >
           {carePlan?.name}
         </Typography>
+        <Typography>{carePlan?.content}</Typography>
       </Box>
     </Modal>
   )

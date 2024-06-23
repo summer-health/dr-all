@@ -10,7 +10,7 @@ import { useCarePlan } from '@/components/context/care-plan-context'
 
 export default function BuildCarePlan() {
   const { logData } = useDebug()
-  const { questions, addQuestion, setCarePlan } = useCarePlan()
+  const { questions, addQuestion, carePlan, setCarePlan } = useCarePlan()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
@@ -81,9 +81,12 @@ export default function BuildCarePlan() {
               message: 'Care plan prompt completion',
             })
             if (Array.isArray(content)) {
-              setCarePlan(content)
+              const plan = content
+                .sort((a, b) => b.date_to_complete - a.date_to_complete)
+                .map((c) => ({ ...c, position: Math.random() * 20 - 10 }))
+              setCarePlan(plan)
               // done
-              console.log(content)
+              console.log(plan)
               router.push('/care-plan')
             } else {
               setState({ ...state, currentQuestion: content })
