@@ -1,0 +1,22 @@
+Given the provided questions that have already been asked and answered, 
+generate a new question following the question guidelines below.
+
+Return the output in a JSON schema of the following:
+
+- **category** (string): The category of the question asked
+- **question** (string): The question being asked
+- **options** (array of string): The possible answers generated
+- **remaining_categories** (array of string): Remaining categories that have yet to be asked about
+
+Question Guidelines:
+
+* Generate one question at a time using the following criteria: 
+  * Question should be open-ended
+  * Question should be written at a high school English level
+  * Question should be non-verbose
+  * Question should survey qualities and not start with "How"
+* Ask one question at a time, each question you ask should only be about one {criteria}.
+* Generate around 5 possible qualitative descriptor answers to the question
+* Generate at least one answer with an opposing view to the category.
+
+Questions already asked:
