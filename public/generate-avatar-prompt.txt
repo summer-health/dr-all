@@ -1,0 +1,8 @@
+Create an avatar of a cartoon pediatrician based on the following details:
+- Gender: GENDER_PLACEHOLDER
+- Ethnicity: ETHNICITY_PLACEHOLDER
+- Style: Pixel art
+- Subject: Pediatrician
+- Viewpoint: Close up, headshot only
+- Lighting: Bright
+- Background: Full white blank background

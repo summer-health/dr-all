@@ -14,9 +14,10 @@ export default function GenerateDoctor() {
   const { questions, persona, setPersona } = useDoctor()
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [promptTemplate, setPromptTemplate] = useState(null)
+  const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
+  const [avatarPromptTemplate, setAvatarPromptTemplate] = useState(null)
   const [loadingTexts, setLoadingTexts] = useState([
     'Generating your perfect doctor...',
-    'Hang tight, your doctor is almost ready...',
   ])
   const [isLoading, setIsLoading] = useState(true)
   const hasGeneratedPersona = useRef(false)
@@ -25,11 +26,19 @@ export default function GenerateDoctor() {
   useEffect(() => {
     const fetchPromptTemplate = async () => {
       try {
-        const response = await fetch('/generate-doctor-prompt.txt')
-        const data = await response.text()
-        setPromptTemplate(data)
+        const [generateDoctorPrompt, loadingTextsPrompt, avatarPrompt] =
+          await Promise.all([
+            fetch('/generate-doctor-prompt.txt').then((res) => res.text()),
+            fetch('/generate-loading-texts-prompt.txt').then((res) =>
+              res.text()
+            ),
+            fetch('/generate-avatar-prompt.txt').then((res) => res.text()),
+          ])
+        setPromptTemplate(generateDoctorPrompt)
+        setLoadingTextsTemplate(loadingTextsPrompt)
+        setAvatarPromptTemplate(avatarPrompt)
       } catch (error) {
-        console.error('Error fetching the text file:', error)
+        console.error('Error fetching the text files:', error)
       }
     }
 
@@ -38,15 +47,13 @@ export default function GenerateDoctor() {
 
   useEffect(() => {
     const generateLoadingTexts = async () => {
-      if (hasGeneratedLoadingTexts.current) return
+      if (hasGeneratedLoadingTexts.current || !loadingTextsTemplate) return
       hasGeneratedLoadingTexts.current = true
 
-      const loadingPrompt = `
-        Based on the following characteristics, generate fun and engaging loading texts. The characteristics are as follows:
-        ${questions.map((q) => `${q.category}: ${q.answer}`).join(', ')}
-
-        Provide 5 engaging and fun loading texts, each on a separate line without any numbering. The texts should be fun, provide a sense of progress, and relate to the characteristics.
-      `
+      const loadingPrompt = loadingTextsTemplate.replace(
+        'QUESTIONS_PLACEHOLDER',
+        questions.map((q) => `${q.category}: ${q.answer}`).join(', ')
+      )
 
       const body = {
         messages: [{ role: 'user', content: loadingPrompt }],
@@ -80,10 +87,11 @@ export default function GenerateDoctor() {
     }
 
     generateLoadingTexts()
-  }, [questions, logData])
+  }, [questions, loadingTextsTemplate, logData])
 
   useEffect(() => {
-    if (hasGeneratedPersona.current || !promptTemplate) return
+    if (hasGeneratedPersona.current || !promptTemplate || !avatarPromptTemplate)
+      return
     hasGeneratedPersona.current = true
 
     const generatePersona = async () => {
@@ -127,16 +135,10 @@ export default function GenerateDoctor() {
           setPersona(content.Persona)
 
           // Generate avatar using DALL-E
-          const avatarPrompt = `
-            Create an avatar of a cartoon pediatrician based on the following details:
-            - Gender: ${content.Persona.Gender}
-            - Ethnicity: ${content.Persona.Ethnicity}
-            - Style: Pixel art
-            - Subject: Pediatrician
-            - Viewpoint: Close up, headshot only
-            - Lighting: Bright
-            - Background: Full white blank background
-          `
+          const avatarPrompt = avatarPromptTemplate
+            .replace('GENDER_PLACEHOLDER', content.Persona.Gender)
+            .replace('ETHNICITY_PLACEHOLDER', content.Persona.Ethnicity)
+
           const avatarResponse = await fetch(
             `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
           )
@@ -168,7 +170,7 @@ export default function GenerateDoctor() {
     }
 
     generatePersona()
-  }, [promptTemplate, questions, logData, setPersona])
+  }, [promptTemplate, avatarPromptTemplate, questions, logData, setPersona])
 
   return (
     <Stack
