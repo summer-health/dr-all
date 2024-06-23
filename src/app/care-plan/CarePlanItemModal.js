@@ -32,7 +32,7 @@ export default function CarePlanItemModal({
         <Stack spacing={2} alignItems="center">
           {persona && persona.Name && avatar ? (
             <Avatar
-              src={persona.doctorAvatar}
+              src={avatar}
               alt={persona.Name}
               sx={{ width: 100, height: 100 }}
             />
@@ -46,12 +46,18 @@ export default function CarePlanItemModal({
           variant="h6"
           sx={{
             color: 'text.primary',
+            textAlign: 'center',
           }}
         >
           {carePlan?.name}
         </Typography>
         <Typography>{carePlan?.content}</Typography>
-        <Box sx={{ flexDirection: 'row' }}>
+        <Stack
+          spacing={2}
+          alignItems="center"
+          justifyContent="center"
+          direction="row"
+        >
           <Button onClick={() => handleCloseModal(carePlan, false)}>
             Close
           </Button>
@@ -61,7 +67,7 @@ export default function CarePlanItemModal({
           >
             Complete
           </Button>
-        </Box>
+        </Stack>
       </Box>
     </Modal>
   )

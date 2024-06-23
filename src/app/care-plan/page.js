@@ -182,28 +182,11 @@ export default function CarePlanApp() {
   }
 
   const handleCloseModal = (carePlan, finished) => {
-    carePlan.visited = finished
+    carePlan.visited = carePlan.visited || finished
     setModalOpen(false)
   }
 
-  const { carePlan, setCarePlan } = useCarePlan()
-
-  useEffect(() => {
-    if (carePlan.length > 0) {
-      return
-    }
-    const fetchCarePlan = async () => {
-      try {
-        const response = await fetch('/care-plan.json')
-        const data = await response.json()
-        setCarePlan(data)
-      } catch (error) {
-        console.error('Error fetching the json file:', error)
-      }
-    }
-
-    fetchCarePlan()
-  }, [carePlan])
+  const { carePlan } = useCarePlan()
 
   return (
     <>

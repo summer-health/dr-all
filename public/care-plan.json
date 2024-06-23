@@ -7,13 +7,6 @@
       "type": "allergies"
   },
   {
-    "name": "Participate in a Hackathon",
-    "category": "reminder",
-    "date_to_complete": "2024-04-30T00:00:00.000Z",
-    "content": "Thanks Nikhil and Danielle for a dope AI hackathon and swag.",
-    "type": "easter-egg"
-  },
-  {
       "name": "Vegetarian Diet Planning",
       "category": "nutrition",
       "date_to_complete": "2024-04-30T00:00:00.000Z",
@@ -222,5 +215,12 @@
       "date_to_complete": "2024-06-30T00:00:00.000Z",
       "content": "Engage in interactive story time by using different voices and encouraging Robin to point out characters.",
       "type": "language-and-communication"
+  },
+  {
+    "name": "Participate in a Hackathon",
+    "category": "reminder",
+    "date_to_complete": "2024-04-30T00:00:00.000Z",
+    "content": "Thanks Nikhil and Danielle for a dope AI hackathon and swag.",
+    "type": "easter-egg"
   }
 ]

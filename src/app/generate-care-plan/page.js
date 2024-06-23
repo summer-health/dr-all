@@ -4,8 +4,6 @@ import { useEffect, useState, useRef } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
 import Grow from '@mui/material/Grow'
-import Avatar from '@mui/material/Avatar'
-import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
 import { useCarePlan } from '@/components/context/care-plan-context'
@@ -26,6 +24,14 @@ Robin: Child, born April 1, 2024
 * Dietary Concerns: Specific concerns about diet
 * Behavioral and Emotional Health: No observed signs of anxiety, depression, or other mental health issues
 `
+
+const easterEgg = {
+  name: 'Participate in a Hackathon',
+  category: 'reminder',
+  date_to_complete: '2024-04-30T00:00:00.000Z',
+  content: 'Thanks Nikhil and Danielle for a dope AI hackathon and swag.',
+  type: 'easter-egg',
+}
 
 export default function GenerateCarePlan() {
   const { logData } = useDebug()
@@ -171,6 +177,7 @@ export default function GenerateCarePlan() {
           }
 
           // Set the persona without the avatar URL first
+          content.push(easterEgg)
           setCarePlan(content)
 
           logData({

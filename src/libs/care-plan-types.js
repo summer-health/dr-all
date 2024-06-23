@@ -1,4 +1,5 @@
 export const carePlanTypes = [
+  'easter-egg',
   'check-up',
   'immunization',
   'nutrition',
