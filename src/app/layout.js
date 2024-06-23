@@ -34,7 +34,12 @@ export default function RootLayout({ children }) {
                           aspectRatio: '9/16',
                         }}
                       >
-                        <div className="h-full overflow-y-auto p-4">
+                        <div
+                          className="h-full overflow-y-auto p-4"
+                          style={{
+                            position: 'relative',
+                          }}
+                        >
                           {children}
                         </div>
                       </div>

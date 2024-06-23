@@ -1,0 +1,100 @@
+[
+  {
+      "name": "Nutrition Monitoring",
+      "category": "tasks",
+      "date_to_complete": "2024-04-30T23:59:59.000Z",
+      "content": "Keep note of Robin's food intake and ensure a balanced diet with fruits, vegetables, grains, dairy, and sweet foods, considering Robin enjoys all these options. Monitor and document any discomfort or reactions to new foods.",
+      "type": "nutrition"
+  },
+  {
+      "name": "Developmental Milestone Assessment",
+      "category": "tasks",
+      "date_to_complete": "2024-04-30T23:59:59.000Z",
+      "content": "Evaluate Robin's developmental progress and identify areas needing support, especially due to the slight delays observed.",
+      "type": "developmental"
+  },
+  {
+      "name": "Allergy Management",
+      "category": "tasks",
+      "date_to_complete": "2024-04-30T23:59:59.000Z",
+      "content": "Ensure all tuna-containing foods are avoided. Educate the nanny or babysitter about Robin's tuna allergy and ensure they know how to respond in case of exposure.",
+      "type": "allergy"
+  },
+  {
+      "name": "Pending Immunizations",
+      "category": "reminder",
+      "date_to_complete": "2024-05-31T23:59:59.000Z",
+      "content": "Schedule and administer Robin's pending immunizations.",
+      "type": "immunization"
+  },
+  {
+      "name": "Nutritional Concerns Consultation",
+      "category": "tasks",
+      "date_to_complete": "2024-05-15T23:59:59.000Z",
+      "content": "Discuss and address any specific dietary concerns with a nutritionist.",
+      "type": "nutrition"
+  },
+  {
+      "name": "Language and Communication Activities",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Engage Robin in activities that foster language skills and communication. Use picture books, singing, and talking to bolster this skill.",
+      "type": "language-and-communication"
+  },
+  {
+      "name": "Physical Activity",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Incorporate regular physical activity into Robin's routine. Ensure activities are fun and safe, encouraging gross and fine motor skill development.",
+      "type": "physical-activity"
+  },
+  {
+      "name": "Sleep Routine Establishment",
+      "category": "tasks",
+      "date_to_complete": "2024-05-31T23:59:59.000Z",
+      "content": "Establish and maintain a consistent sleep routine for Robin to support overall health and development.",
+      "type": "sleep"
+  },
+  {
+      "name": "Parental Support",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Provide Rachel with resources and guidance on child development, nutrition, and managing mild food discomfort.",
+      "type": "parental-support"
+  },
+  {
+      "name": "Environmental Health Check",
+      "category": "tasks",
+      "date_to_complete": "2024-05-15T23:59:59.000Z",
+      "content": "Ensure that Robin's living environment is safe and free from allergens or any health hazards.",
+      "type": "environmental-health"
+  },
+  {
+      "name": "Social Skills Development",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Encourage social interactions with other children under supervision to develop Robin's social skills.",
+      "type": "social-skills"
+  },
+  {
+      "name": "Seasonal Health Tips",
+      "category": "reminder",
+      "date_to_complete": "2024-06-01T23:59:59.000Z",
+      "content": "Provide Rachel with tips on keeping Robin safe and healthy during the summer months.",
+      "type": "seasonal-health-tips"
+  },
+  {
+      "name": "Teething and Oral Health",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Monitor Robin's teething process and ensure proper oral hygiene practices are in place.",
+      "type": "teething-and-oral-health"
+  },
+  {
+      "name": "Safety Measures Education",
+      "category": "tasks",
+      "date_to_complete": "2024-05-31T23:59:59.000Z",
+      "content": "Educate Rachel and the nanny on essential safety measures at home and outdoors.",
+      "type": "safety"
+  }
+]

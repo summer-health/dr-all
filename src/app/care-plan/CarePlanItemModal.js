@@ -5,7 +5,11 @@
 import React from 'react'
 import { Modal, Box, Typography } from '@mui/material'
 
-export default function CarePlanItemModal({ modalOpen, handleCloseModal }) {
+export default function CarePlanItemModal({
+  modalOpen,
+  handleCloseModal,
+  carePlan,
+}) {
   return (
     <Modal open={modalOpen} onClose={handleCloseModal}>
       <Box
@@ -27,7 +31,7 @@ export default function CarePlanItemModal({ modalOpen, handleCloseModal }) {
             color: 'text.primary',
           }}
         >
-          Care Plan Modal
+          {carePlan?.name}
         </Typography>
       </Box>
     </Modal>

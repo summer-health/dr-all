@@ -4,7 +4,7 @@ import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
-
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useCarePlan } from '@/components/context/care-plan-context'
 
@@ -14,6 +14,7 @@ export default function BuildCarePlan() {
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchPrompt = async () => {
@@ -80,14 +81,10 @@ export default function BuildCarePlan() {
               message: 'Care plan prompt completion',
             })
             if (Array.isArray(content)) {
-              const contentWithUrl = content.map((c) => ({
-                ...c,
-                url: '/api/openai/image?prompt=' + c.image_prompt,
-              }))
-              setCarePlan(contentWithUrl)
+              setCarePlan(content)
               // done
-              console.log(contentWithUrl)
-              alert('we are done')
+              console.log(content)
+              router.push('/care-plan')
             } else {
               setState({ ...state, currentQuestion: content })
             }
@@ -95,6 +92,7 @@ export default function BuildCarePlan() {
         })
         .catch((error) => {
           console.error('Error:', error)
+          alert(error)
         })
     }
   }, [prompt, system])

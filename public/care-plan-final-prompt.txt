@@ -1,17 +1,44 @@
-Given the provided questions that have already been asked and answered, 
-return the care plan output in a JSON:
+Given the provided questions that have already been asked and answered 
+return the care plan output in a JSON.
+Your output should able to parse with javascript JSON.parse() method without any error. don't include like markdown ```json
 
 - **name** (string): The generated care plan name
 - **category** (string): reading or reminder or tasks
 - **date_to_complete** (string): care plan due date. format in ISO string e.g 2024-06-23T05:03:20.642Z
 - **content** (string): Content of the care plan
-- **image_prompt** (string): Dall-E image generate prompt. based on the care plan. example: Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. **content**
+- **type** (string): one of the value from Type list can explain this care plan
+
+
+# Type list
+check-up
+immunization
+nutrition
+developmental
+allergy
+sleep
+safety
+behavioral
+parental-support
+physical-activity
+mental-health
+sensory-development
+social-skills
+fine-motor-skills
+gross-motor-skills
+language-and-communication
+parent-child-bonding
+parent-education
+environmental-health
+teething-and-oral-health
+sibling-integration
+seasonal-health-tips
+technology-and-screen-time
 
 # example
 
 [
-  {"name":"reading a book", "category": "reading", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "blog post of reading a book", "image_prompt":"Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. blog post of reading a book"},
-  {"name":"give a vaccine", "category": "reminder", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "explanation of the vaccine", "image_prompt":"Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. explanation of the vaccine"}
+  {"name":"reading a book" "category": "reading" "date_to_complete": "2024-06-23T05:03:20.642Z" "content": "blog post of reading a book" "type":"behavioral"}
+  {"name":"give a vaccine" "category": "reminder" "date_to_complete": "2024-06-23T05:03:20.642Z" "content": "explanation of the vaccine" "type":"immunization"}
 ]
 
 Questions already asked:
