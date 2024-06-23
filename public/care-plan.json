@@ -1,82 +1,100 @@
 [
   {
-      "name": "Monitor Speech Development",
+      "name": "Nutrition Monitoring",
       "category": "tasks",
-      "date_to_complete": "2024-01-01T05:00:00.000Z",
-      "content": "Keep track of Robin's progress in speech development. Provide extra support and encouragement during speech-related activities.",
-      "image_prompt": "Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic. A speech bubble with a small child talking.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic. A speech bubble with a small child talking."
+      "date_to_complete": "2024-04-30T23:59:59.000Z",
+      "content": "Keep note of Robin's food intake and ensure a balanced diet with fruits, vegetables, grains, dairy, and sweet foods, considering Robin enjoys all these options. Monitor and document any discomfort or reactions to new foods.",
+      "type": "nutrition"
   },
   {
-      "name": "Speech Therapy Sessions",
+      "name": "Developmental Milestone Assessment",
       "category": "tasks",
-      "date_to_complete": "2024-01-08T05:00:00.000Z",
-      "content": "Schedule speech therapy sessions for Robin to help with speech delay.",
-      "image_prompt": "Create an icon for the following care plan item in a friendly, animated style. A speech therapist engaging with a child.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item in a friendly, animated style. A speech therapist engaging with a child."
+      "date_to_complete": "2024-04-30T23:59:59.000Z",
+      "content": "Evaluate Robin's developmental progress and identify areas needing support, especially due to the slight delays observed.",
+      "type": "developmental"
   },
   {
-      "name": "Immunization Updates",
+      "name": "Allergy Management",
+      "category": "tasks",
+      "date_to_complete": "2024-04-30T23:59:59.000Z",
+      "content": "Ensure all tuna-containing foods are avoided. Educate the nanny or babysitter about Robin's tuna allergy and ensure they know how to respond in case of exposure.",
+      "type": "allergy"
+  },
+  {
+      "name": "Pending Immunizations",
       "category": "reminder",
-      "date_to_complete": "2024-01-15T05:00:00.000Z",
-      "content": "Check with your healthcare provider to update the pending immunizations for Robin.",
-      "image_prompt": "Create an icon for the following care plan item with a friendly aesthetic. A healthcare professional holding a vaccine with a smiling child.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a friendly aesthetic. A healthcare professional holding a vaccine with a smiling child."
+      "date_to_complete": "2024-05-31T23:59:59.000Z",
+      "content": "Schedule and administer Robin's pending immunizations.",
+      "type": "immunization"
   },
   {
-      "name": "Introduce New Foods",
+      "name": "Nutritional Concerns Consultation",
       "category": "tasks",
-      "date_to_complete": "2024-01-22T05:00:00.000Z",
-      "content": "Gradually introduce new foods to Robin's diet to ensure nutritional balance and monitor for any allergic reactions.",
-      "image_prompt": "Create an icon for the following care plan item in a child-friendly style. A plate with various colorful new foods and a smiling child.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item in a child-friendly style. A plate with various colorful new foods and a smiling child."
+      "date_to_complete": "2024-05-15T23:59:59.000Z",
+      "content": "Discuss and address any specific dietary concerns with a nutritionist.",
+      "type": "nutrition"
   },
   {
-      "name": "Monitor Dietary Reactions",
+      "name": "Language and Communication Activities",
       "category": "tasks",
-      "date_to_complete": "2024-01-31T05:00:00.000Z",
-      "content": "Keep a log of Robin's reactions to new foods and adjust diet accordingly.",
-      "image_prompt": "Create an icon for the following care plan item with a vibrant, digital animation style. A notebook with food images and reaction emojis.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a vibrant, digital animation style. A notebook with food images and reaction emojis."
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Engage Robin in activities that foster language skills and communication. Use picture books, singing, and talking to bolster this skill.",
+      "type": "language-and-communication"
   },
   {
-      "name": "Physical Coordination Activities",
+      "name": "Physical Activity",
       "category": "tasks",
-      "date_to_complete": "2024-02-07T05:00:00.000Z",
-      "content": "Engage Robin in activities like playing catch or building blocks to help with physical coordination.",
-      "image_prompt": "Create an icon for the following care plan item with a fun, child-friendly design. A child playing catch with a parent.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a fun, child-friendly design. A child playing catch with a parent."
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Incorporate regular physical activity into Robin's routine. Ensure activities are fun and safe, encouraging gross and fine motor skill development.",
+      "type": "physical-activity"
   },
   {
-      "name": "Encourage Social Interaction",
+      "name": "Sleep Routine Establishment",
       "category": "tasks",
-      "date_to_complete": "2024-02-14T05:00:00.000Z",
-      "content": "Arrange playdates or group activities to enhance Robin's social interaction skills.",
-      "image_prompt": "Create an icon for the following care plan item with a playful, animated style. Children playing together in a sandbox.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a playful, animated style. Children playing together in a sandbox."
+      "date_to_complete": "2024-05-31T23:59:59.000Z",
+      "content": "Establish and maintain a consistent sleep routine for Robin to support overall health and development.",
+      "type": "sleep"
   },
   {
-      "name": "Routine Health Check-Up",
+      "name": "Parental Support",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Provide Rachel with resources and guidance on child development, nutrition, and managing mild food discomfort.",
+      "type": "parental-support"
+  },
+  {
+      "name": "Environmental Health Check",
+      "category": "tasks",
+      "date_to_complete": "2024-05-15T23:59:59.000Z",
+      "content": "Ensure that Robin's living environment is safe and free from allergens or any health hazards.",
+      "type": "environmental-health"
+  },
+  {
+      "name": "Social Skills Development",
+      "category": "tasks",
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Encourage social interactions with other children under supervision to develop Robin's social skills.",
+      "type": "social-skills"
+  },
+  {
+      "name": "Seasonal Health Tips",
       "category": "reminder",
-      "date_to_complete": "2024-02-21T05:00:00.000Z",
-      "content": "Schedule a routine health check-up for Robin to ensure overall well-being.",
-      "image_prompt": "Create an icon for the following care plan item with a cheerful style. A child at a doctor's office with a friendly doctor.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a cheerful style. A child at a doctor's office with a friendly doctor."
+      "date_to_complete": "2024-06-01T23:59:59.000Z",
+      "content": "Provide Rachel with tips on keeping Robin safe and healthy during the summer months.",
+      "type": "seasonal-health-tips"
   },
   {
-      "name": "Track Milestones",
+      "name": "Teething and Oral Health",
       "category": "tasks",
-      "date_to_complete": "2024-02-28T05:00:00.000Z",
-      "content": "Document and review Robin's milestones to ensure progress is on track.",
-      "image_prompt": "Create an icon for the following care plan item with a colorful, educational style. A growth chart with milestone markers.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a colorful, educational style. A growth chart with milestone markers."
+      "date_to_complete": "2024-06-30T23:59:59.000Z",
+      "content": "Monitor Robin's teething process and ensure proper oral hygiene practices are in place.",
+      "type": "teething-and-oral-health"
   },
   {
-      "name": "Read Books Together",
+      "name": "Safety Measures Education",
       "category": "tasks",
-      "date_to_complete": "2024-03-07T05:00:00.000Z",
-      "content": "Spend time reading books together with Robin to enhance language development and bonding.",
-      "image_prompt": "Create an icon for the following care plan item with a warm, animated design. A parent reading a book with a child on their lap.",
-      "url": "/api/openai/image?prompt=Create an icon for the following care plan item with a warm, animated design. A parent reading a book with a child on their lap."
+      "date_to_complete": "2024-05-31T23:59:59.000Z",
+      "content": "Educate Rachel and the nanny on essential safety measures at home and outdoors.",
+      "type": "safety"
   }
 ]

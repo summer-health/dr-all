@@ -15,6 +15,7 @@ import { Modal, Box, Card, CardContent, Typography } from '@mui/material'
 import CarePlanItemModal from './CarePlanItemModal'
 import { Environment } from '@react-three/drei'
 import { useCarePlan } from '@/components/context/care-plan-context'
+import { carePlanTypes } from '@/libs/care-plan-types'
 
 function getLabel(value) {
   if (value <= 6 || isNaN(value)) {
@@ -102,7 +103,7 @@ function Scene({ cameraZ, onItemClick, items }) {
     }
   })
 
-  const repeatLength = 75
+  const repeatLength = 5
 
   return (
     <>
@@ -116,15 +117,14 @@ function Scene({ cameraZ, onItemClick, items }) {
       />
       <Road />
       {items.map((carePlan, index) => {
+        const imageUrl = carePlanTypes.includes(carePlan.type)
+          ? `/care-plan/${carePlan.type}.png`
+          : '/care-plan/developmental.png'
+        console.log('----', imageUrl)
         return (
           <>
             <CarePlanSprite
-              url={
-                [
-                  '/care-plan/childTalking.png',
-                  '/care-plan/speechTherapist.png',
-                ][Math.floor(Math.random() * 2)]
-              }
+              url={imageUrl}
               position={[-3, 3, 0 - index * repeatLength]}
               onClick={() => onItemClick(carePlan)}
             />
@@ -204,6 +204,9 @@ export default function CarePlanApp() {
   const { carePlan, setCarePlan } = useCarePlan()
 
   useEffect(() => {
+    if (carePlan.length > 0) {
+      return
+    }
     const fetchCarePlan = async () => {
       try {
         const response = await fetch('/care-plan.json')
@@ -215,7 +218,7 @@ export default function CarePlanApp() {
     }
 
     fetchCarePlan()
-  }, [])
+  }, [carePlan])
 
   return (
     <>

@@ -81,13 +81,9 @@ export default function BuildCarePlan() {
               message: 'Care plan prompt completion',
             })
             if (Array.isArray(content)) {
-              const contentWithUrl = content.map((c) => ({
-                ...c,
-                url: '/api/openai/image?prompt=' + c.image_prompt,
-              }))
-              setCarePlan(contentWithUrl)
+              setCarePlan(content)
               // done
-              console.log(contentWithUrl)
+              console.log(content)
               router.push('/care-plan')
             } else {
               setState({ ...state, currentQuestion: content })
@@ -96,6 +92,7 @@ export default function BuildCarePlan() {
         })
         .catch((error) => {
           console.error('Error:', error)
+          alert(error)
         })
     }
   }, [prompt, system])
