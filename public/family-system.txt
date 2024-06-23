@@ -42,16 +42,3 @@ Child Medical Information:
     - Up-to-date immunization status
     - Any adverse reactions to vaccines
 
-### **5. Social History:**
-- **Diet and Nutrition:**
-    - Typical daily diet
-    - Any dietary restrictions or concerns
-- **Sleep Patterns:**
-    - Sleep duration and quality
-    - Any sleep issues
-
-### **6. Behavioral and Emotional Health:**
-
-- **Mental Health:**
-    - Signs of anxiety, depression, or other mental health issues
-    - Behavioral concerns (aggression, hyperactivity, etc.)
