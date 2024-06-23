@@ -69,7 +69,7 @@ function Road() {
   )
 }
 
-function CarePlanSprite({ position, url, onClick }) {
+function CarePlanSprite({ position, url, onClick, visited = false }) {
   const spriteRef = useRef()
   const texture = useLoader(THREE.TextureLoader, url)
   texture.colorSpace = THREE.SRGBColorSpace
@@ -85,7 +85,12 @@ function CarePlanSprite({ position, url, onClick }) {
         scale={[5, 5]}
         renderOrder={999}
       >
-        <spriteMaterial attach="material" map={texture} transparent />
+        <spriteMaterial
+          attach="material"
+          map={texture}
+          transparent
+          opacity={visited ? 0.5 : 1.0}
+        />
       </sprite>
     </mesh>
   )
@@ -103,7 +108,7 @@ function Scene({ cameraZ, onItemClick, items }) {
     }
   })
 
-  const repeatLength = 5
+  const repeatLength = 15
 
   return (
     <>
@@ -120,35 +125,16 @@ function Scene({ cameraZ, onItemClick, items }) {
         const imageUrl = carePlanTypes.includes(carePlan.type)
           ? `/care-plan/${carePlan.type}.png`
           : '/care-plan/developmental.png'
+        const y = 0 - index * repeatLength
+        const x = Math.sin(y) * 7
         return (
           <>
             <CarePlanSprite
               url={imageUrl}
-              position={[carePlan.position, 3, 0 - index * repeatLength]}
+              position={[x, 3, y]}
               onClick={() => onItemClick(carePlan)}
+              visited={!!carePlan.visited}
             />
-            {/* <CarePlanSprite
-              url="/sh-icon.png"
-              position={[-1, 0.7, -10 - index * repeatLength]}
-              onClick={onItemClick}
-            />
-            <CarePlanSprite
-              url="/sh-icon.png"
-              position={[3, 0.7, -20 - index * repeatLength]}
-              onClick={onItemClick}
-            />
-
-            <CarePlanSprite
-              url="/sh-icon.png"
-              position={[5, 0.7, -42 - index * repeatLength]}
-              onClick={onItemClick}
-            />
-
-            <CarePlanSprite
-              url="/sh-icon.png"
-              position={[-4, 0.7, -56 - index * repeatLength]}
-              onClick={onItemClick}
-            /> */}
           </>
         )
       })}
@@ -191,6 +177,7 @@ export default function CarePlanApp() {
   }, [rowCount])
 
   const handleItemClick = (carePlan) => {
+    carePlan.visited = true
     console.log(carePlan)
     setSelectedCarePlan(carePlan)
     setModalOpen(true)
