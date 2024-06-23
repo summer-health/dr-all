@@ -11,17 +11,7 @@
 
 
 # Family Profile
-Rachel: Mom
-Robin: Child, born April 1, 2024
-
-# Child's Medical Information:
-* Allergy:Tuna
-* Current Medications: None
-* Developmental Milestones: Slight delays in some milestones
-* Immunization Status: Mostly up-to-date, with a few pending
-* Childcare: Nanny or babysitter
-* Dietary Concerns: Specific concerns about diet
-* Behavioral and Emotional Health: No observed signs of anxiety, depression, or other mental health issues
+{family}
 
 # Doctor Profile
 

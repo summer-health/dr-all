@@ -9,16 +9,18 @@ import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
 import { store } from '@/libs/localStorage'
+import { useCarePlan } from '@/components/context/care-plan-context'
 
-export default function GenerateDoctor() {
+export default function GenerateCarePlan() {
   const { logData } = useDebug()
   const { questions, persona, setPersona } = useDoctor()
+  const { carePlan } = useCarePlan()
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [promptTemplate, setPromptTemplate] = useState(null)
   const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
   const [avatarPromptTemplate, setAvatarPromptTemplate] = useState(null)
   const [loadingTexts, setLoadingTexts] = useState([
-    'Generating your perfect doctor...',
+    'Generating your perfect care plan...',
   ])
   const [isLoading, setIsLoading] = useState(true)
   const hasGeneratedPersona = useRef(false)
@@ -232,7 +234,7 @@ function LoadingState({ texts }) {
       }}
     >
       <img
-        src="/doctor-generator.gif"
+        src="/care-plan-generator.gif"
         alt="Loading..."
         style={{ width: 150, height: 150 }}
       />
