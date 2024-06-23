@@ -7,7 +7,8 @@ import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
 import TextInput from '../../components/input/text-input'
 import { useRouter } from 'next/navigation'
-import { userDoctor } from '../../components/context/doctor-context'
+import { useDoctor } from '../../components/context/doctor-context'
+import { useFamily } from '../../components/context/family-context'
 
 function FamilyInput({ question, onNext }) {
   if (question.inputType === 'TEXT') {
@@ -22,6 +23,7 @@ function FamilyInput({ question, onNext }) {
 }
 
 export default function BuildFamily() {
+  const { familyQuestions, addFamilyQuestion } = useFamily()
   const { persona } = useDoctor()
   const { logData } = useDebug()
   const [prompt, setPrompt] = useState(undefined)
@@ -48,6 +50,12 @@ export default function BuildFamily() {
       } catch (error) {
         console.error('Error fetching the text file:', error)
       }
+    }
+
+    if (!persona?.imageUrl) {
+      logData({ message: 'No persona data found, going home' })
+      router.push('/')
+      return
     }
 
     fetchPrompt()
@@ -95,12 +103,17 @@ export default function BuildFamily() {
     const currentQuestion = state.currentQuestion
     setState({ ...state, currentQuestion: undefined })
 
+    addFamilyQuestion({
+      question: currentQuestion.question,
+      answer,
+    })
+
     if (currentQuestion.continue) {
       setPrompt(
         `${prompt}\n\nQuestion: ${currentQuestion.question}\nAnswer: ${answer}`
       )
     } else {
-      logData({ message: 'Finished family prompts' })
+      logData({ message: 'Finished family prompts', data: familyQuestions })
       // router.push('/generate-dr')
     }
   }

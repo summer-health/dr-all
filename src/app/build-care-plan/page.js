@@ -11,20 +11,6 @@ import { useCarePlan } from '@/components/context/care-plan-context'
 import { useDoctor } from '@/components/context/doctor-context'
 import { useFamily } from '@/components/context/family-context'
 
-const defaultPersona = `Dr. Emma Lee is a friendly and empathetic female pediatrician of Asian ethnicity. She greets her patients warmly by their first names, creating a welcoming and personal atmosphere. With a casual tone, she makes her patients feel at ease while ensuring clear and detailed communication, using layman's terms with occasional medical jargon for accuracy. Dr. Lee is known for her light-hearted humor, often incorporating puns and light jokes to make the experience enjoyable. She always acknowledges and validates her patients' feelings and provides words of encouragement, especially during challenging times. Her explanations are thorough yet not overwhelming, and she consistently asks follow-up questions to confirm understanding, ensuring her patients and their families feel well-informed and cared for.`
-const defaultFamily = `Rachel: Mom
-Robin: Child, born April 1, 2024
-
-# Child's Medical Information:
-* Allergy:Tuna
-* Current Medications: None
-* Developmental Milestones: Slight delays in some milestones
-* Immunization Status: Mostly up-to-date, with a few pending
-* Childcare: Nanny or babysitter
-* Dietary Concerns: Specific concerns about diet
-* Behavioral and Emotional Health: No observed signs of anxiety, depression, or other mental health issues
-`
-
 const MAX_QUESTIONS = 3
 
 export default function BuildCarePlan() {
@@ -52,29 +38,30 @@ export default function BuildCarePlan() {
       try {
         const response = await fetch('/care-plan-system.txt')
         let systemPrompt = await response.text()
-        if (persona) {
-          const text = Object.entries(persona).reduce((acc, [key, value]) => {
+
+        const personaText = Object.entries(persona).reduce(
+          (acc, [key, value]) => {
             if (key === 'doctorAvatar') return acc
             return `${acc}\n- ${key}: ${value}`
-          }, '')
-          console.log('doctor', text)
-          systemPrompt = systemPrompt.replace('{doctorPersona}', text)
-        } else {
-          systemPrompt = systemPrompt.replace('{doctorPersona}', defaultPersona)
-        }
-        if (family) {
-          const text = Object.entries(family).reduce((acc, [key, value]) => {
-            return `${acc}\n- ${key}: ${value}`
-          }, '')
-          console.log('family', text)
-          systemPrompt = systemPrompt.replace('{family}', text)
-        } else {
-          systemPrompt = systemPrompt.replace('{family}', defaultFamily)
-        }
+          },
+          ''
+        )
+        console.log('doctor', personaText)
+        systemPrompt = systemPrompt.replace('{doctorPersona}', personaText)
+
+        console.log('family', family.summary)
+        systemPrompt = systemPrompt.replace('{family}', family.summary)
+
         setSystem(systemPrompt)
       } catch (error) {
         console.error('Error fetching the text file:', error)
       }
+    }
+
+    if (!persona?.imageUrl || !family?.summary) {
+      logData({ message: 'No persona or family data found, going home' })
+      router.push('/')
+      return
     }
 
     fetchPrompt()

@@ -199,7 +199,29 @@ export default function GenerateCarePlan() {
       justifyContent="center"
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
-      {isLoading && <LoadingState texts={loadingTexts} />}
+      {isLoading ? (
+        <LoadingState texts={loadingTexts} />
+      ) : (
+        <Stack spacing={2} alignItems="center">
+          {avatarUrl ? (
+            <Avatar
+              src={avatarUrl}
+              alt={persona.Name}
+              sx={{ width: 100, height: 100 }}
+            />
+          ) : (
+            <Avatar sx={{ width: 100, height: 100 }}>
+              <FaceIcon style={{ fontSize: 60 }} />
+            </Avatar>
+          )}
+          <Typography variant="h4" component="h1">
+            {persona.Name}
+          </Typography>
+          <Typography variant="body1" sx={{ marginTop: 2 }}>
+            {persona.Introduction}
+          </Typography>
+        </Stack>
+      )}
     </Stack>
   )
 }
