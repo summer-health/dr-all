@@ -5,7 +5,7 @@ import Stack from '@mui/material/Stack'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
 import { useDoctor } from '../../components/context/doctor-context'
-
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 
 export default function BuildDr() {
@@ -14,6 +14,7 @@ export default function BuildDr() {
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchPrompt = async () => {
@@ -93,6 +94,7 @@ export default function BuildDr() {
       )
     } else {
       logData({ message: 'Finished doctor prompts' })
+      router.push('/generate-dr')
     }
   }
 

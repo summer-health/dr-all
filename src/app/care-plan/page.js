@@ -55,9 +55,9 @@ function Scene({ cameraZ, carPosition, addMoreRows, onItemClick }) {
   useFrame(() => {
     if (cameraRef.current) {
       cameraRef.current.position.z = cameraZ
-      cameraRef.current.position.y = 2
+      cameraRef.current.position.y = 1
       cameraRef.current.position.x = 0
-      cameraRef.current.lookAt(0, 0, cameraZ - 20)
+      cameraRef.current.lookAt(0, 0, cameraZ - 5)
 
       if (cameraZ < -offsets.length * 100 + 50) {
         addMoreRows()
