@@ -74,8 +74,9 @@ export default function GenerateDoctor() {
 
           // Generate avatar using DALL-E
           const avatarResponse = await fetch(
-            `/api/openai/image?prompt=${encodeURIComponent(content.Persona.Appearance + ' digital animation style with a vibrant, child-friendly aesthetic')}`
+            `/api/openai/image?prompt=${encodeURIComponent(content.Persona.Appearance)}`
           )
+          console.log('generating avatar')
           const avatarBlob = await avatarResponse.blob()
           const avatarUrl = URL.createObjectURL(avatarBlob)
 
