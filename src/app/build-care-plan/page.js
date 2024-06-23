@@ -59,7 +59,7 @@ export default function BuildCarePlan() {
         { role: 'system', content: system },
         { role: 'user', content: prompt },
       ]
-      const body = { messages, model: 'gpt-4' }
+      const body = { messages, model: 'gpt-4o' }
       fetch('/api/openai/completion', {
         method: 'POST',
         headers: {
@@ -82,9 +82,7 @@ export default function BuildCarePlan() {
             if (Array.isArray(content)) {
               const contentWithUrl = content.map((c) => ({
                 ...c,
-                url:
-                  '/api/openai/image?text=' +
-                  encodeURIComponent(c.image_prompt),
+                url: '/api/openai/image?prompt=' + c.image_prompt,
               }))
               setCarePlan(contentWithUrl)
               // done

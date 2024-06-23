@@ -1,5 +1,5 @@
 Given the provided questions that have already been asked and answered, 
-return the care plan output in a JSON of the following:
+return the care plan output in a JSON:
 
 - **name** (string): The generated care plan name
 - **category** (string): reading or reminder or tasks
@@ -7,7 +7,7 @@ return the care plan output in a JSON of the following:
 - **content** (string): Content of the care plan
 - **image_prompt** (string): Dall-E image generate prompt. based on the care plan. example: Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. **content**
 
-example
+# example
 
 [
   {"name":"reading a book", "category": "reading", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "blog post of reading a book", "image_prompt":"Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. blog post of reading a book"},

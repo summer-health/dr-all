@@ -1,24 +1,26 @@
 Given the provided questions that have already been asked and answered, 
 generate a new question following the question guidelines below.
 
-Return the output in a JSON of the following:
+# Question Guideline
+* Ask only one question at a time for each type of medical information (important!)
+* For each question make sure it's relevant to the current age of the child
+* For each question provide 7 options for the parent to select from
+  * One of the options should be to skip the question 
+  * One of the options is to select all the options
+  * Options should not have more than 5 words 
+* Only ask up to 2 questions for each type of medical information
+* Only ask up to 10 questions to capture all the information you need to build a care plan, prioritize the information you think is most important to the care plan
+
+# You must return the output in a JSON of the following:
 
 - **question** (string): The question being asked
 - **options** (array of string): The possible answers generated
 
-example
+# example JSON output
 
 {
   "question": "this is question",
   "options": ["Answer 1", "Answer 2", "Answer 3"]
 }
-
-# Question Guideline
-
-1. Ask one question at a time
-2. For each question provide 7 options for the parent to select from
-    1. One of the options should be to skip the question 
-    2. One of the options is to select all the options
-3. Only ask up to 10 questions to capture all the information you need to build a care plan, prioritize the information you think is most important to the care plan
 
 Questions already asked:
