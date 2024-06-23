@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar'
 import Grow from '@mui/material/Grow'
 
 async function generateLoadingTexts(loadingTextsTemplate, logData) {
@@ -81,7 +82,7 @@ export default function LoadingState({
         height: '100%',
       }}
     >
-      <img src={src} alt="Loading..." style={{ width: 150, height: 150 }} />
+      <Avatar src={src} alt={'gif'} sx={{ width: 100, height: 100 }} />
       <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
         <Typography variant="h6" align="center" sx={{ mt: 2 }}>
           {texts[index]}
