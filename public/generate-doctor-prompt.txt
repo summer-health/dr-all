@@ -1,8 +1,9 @@
 Based on the following responses, generate a brief persona description for the ideal pediatrician in JSON format. The JSON should have a Persona object that includes the following fields:
 
-- Name: The human name of the pediatrician. Should try to match the gender and ethnicity if specified  (string)
+- Name: The human name of the pediatrician. Should try to match the gender and ethnicity if specified (string)
 - Job Title: Always "Pediatrician" (string)
 - Description: A one-paragraph description of the pediatrician (string), focusing on their personality, approach to patient care, and overall demeanor.
+- Doctor Introduction: A one-paragraph doctor introduction to the user in the tone of the doctor based on their personality and characteristics.
 - Friendliness: A description of the pediatrician's friendliness (string)
 - Empathy: A description of the pediatrician's empathy (string)
 - Funniness: A description of the pediatrician's sense of humor (string)
@@ -10,7 +11,8 @@ Based on the following responses, generate a brief persona description for the i
 - Communication Style: A description of the pediatrician's communication style (string)
 - Gender: The gender of the pediatrician (string)
 - Ethnicity: The ethnicity of the pediatrician (string)
-- Appearance: A textual description of the pediatrician's appearance for avatar generation (string). The avatar should always be one doctor in a digital animation style with a vibrant, child-friendly aesthetic.
+- Appearance: A textual description of the pediatrician's appearance for avatar generation (string). The avatar should always be one doctor in the style of video game pixel art.
+- Image Url: The image URL that will be in the field after the generation is complete (string)
 
 Based on the provided answers, fill in the respective fields:
 QUESTIONS_PLACEHOLDER
@@ -22,6 +24,7 @@ Ensure the JSON is properly formatted and includes all the fields. Here is an ex
     "Name": "Dr. Alex Lincoln",
     "Job Title": "Pediatrician",
     "Description": "Dr. Alex Lincoln is a dedicated pediatrician with a calm and soothing presence that puts both parents and children at ease. Known for a balanced mix of medical jargon and layman's terms, Dr. Lincoln ensures that all medical information is clearly understood. With a casually understanding demeanor, Dr. Lincoln blends professionalism with a touch of humor, creating a friendly and relaxed environment. Dr. Lincoln's warm smile and approachable nature make visits enjoyable, while their thorough and detailed approach guarantees top-notch care. Dr. Lincoln's unique combination of empathy, friendliness, and professionalism truly sets them apart.",
+    "Doctor Introduction": "Hello! I'm Dr. Alex Lincoln. It's a pleasure to meet you. I look forward to making your visits comfortable and ensuring you always feel heard and cared for. Let's work together to keep your child healthy and happy.",
     "Friendliness": "A calm, soothing presence",
     "Empathy": "Casually understanding, but professional",
     "Funniness": "Serious with a hint of humor",
@@ -29,7 +32,8 @@ Ensure the JSON is properly formatted and includes all the fields. Here is an ex
     "Communication Style": "Balanced mix of medical jargon with layman's terms",
     "Gender": "Transgender",
     "Ethnicity": "African American",
-    "Appearance": "Dr. Lincoln has short curly hair, wears glasses, and often has a warm smile."
+    "Appearance": "Dr. Lincoln has short curly hair, wears glasses, and often has a warm smile.",
+    "Image Url": ""
   }
 }
 
