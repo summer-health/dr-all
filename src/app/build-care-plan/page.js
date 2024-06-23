@@ -37,7 +37,12 @@ export default function BuildCarePlan() {
         const response = await fetch('/care-plan-system.txt')
         const data = await response.text()
         if (persona) {
-          setSystem(data.replace('{doctorPersona}', persona))
+          const text = Object.entries(persona).reduce((acc, [key, value]) => {
+            if (key === 'doctorAvatar') return acc
+            return `${acc}\n- ${key}: ${value}`
+          }, '')
+          console.log(text)
+          setSystem(data.replace('{doctorPersona}', text))
         } else {
           setSystem(data.replace('{doctorPersona}', defaultPersona))
         }
@@ -145,9 +150,9 @@ export default function BuildCarePlan() {
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
       <Stack spacing={2} alignItems="center">
-        {persona && persona['Image Url'] ? (
+        {persona && persona.Name && persona.doctorAvatar ? (
           <Avatar
-            src={persona['Image Url']}
+            src={persona.doctorAvatar}
             alt={persona.Name}
             sx={{ width: 100, height: 100 }}
           />

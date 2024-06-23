@@ -10,15 +10,6 @@ import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
 import { store } from '@/libs/localStorage'
 
-const blobToBase64 = (blob) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onloadend = () => resolve(reader.result)
-    reader.onerror = () => reject(new Error('Failed to convert Blob to Base64'))
-    reader.readAsDataURL(blob)
-  })
-}
-
 export default function GenerateDoctor() {
   const { logData } = useDebug()
   const { questions, persona, setPersona } = useDoctor()
@@ -153,21 +144,16 @@ export default function GenerateDoctor() {
             `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
           )
           const avatarBlob = await avatarResponse.blob()
-          blobToBase64(avatarBlob)
-            .then((base64String) => {
-              setPersona({ ...persona, doctorAvatar: base64String })
-            })
-            .catch((error) => {
-              console.error('Error converting Blob to Base64:', error)
-            })
+          store('doctorAvatar', avatarBlob)
           const avatarUrl = URL.createObjectURL(avatarBlob)
 
-          // content.Persona['Image Url'] = avatarUrl
+          content.Persona['Image Url'] = avatarUrl
           setAvatarUrl(avatarUrl)
 
           // Update persona with avatar URL
           const fullPersona = {
             ...content.Persona,
+            'Image Url': avatarUrl,
           }
           setPersona(fullPersona)
 
