@@ -4,6 +4,7 @@ import { Button, Box, Stack } from '@mui/material'
 import { useDoctor } from '@/components/context/doctor-context'
 import { useFamily } from '@/components/context/family-context'
 import { useRouter } from 'next/navigation'
+import { useCarePlan } from '@/components/context/care-plan-context'
 
 const mockDoctorPersona = {
   Name: 'Dr. Emma Washington',
@@ -140,6 +141,7 @@ Robin: Child, born April 1, 2024
 export default function Home() {
   const { persona, setPersona, setAvatar } = useDoctor()
   const { family, familyQuestions, setFamilyQuestions, setFamily } = useFamily()
+  const { setCarePlan, carePlan } = useCarePlan()
   const router = useRouter()
   return (
     <Stack
@@ -184,6 +186,14 @@ export default function Home() {
         >
           Jump to care plan gen
         </Button>
+        <Button
+          disabled={!family?.summary || !persona?.imageUrl || !carePlan}
+          size="small"
+          variant="text"
+          onClick={() => router.push('/care-plan')}
+        >
+          Jump to care plan
+        </Button>
         <Box sx={{ height: 24 }} />
         <Button
           size="small"
@@ -211,6 +221,17 @@ export default function Home() {
           onClick={() => setFamily({ summary: mockFamilySummary })}
         >
           Load mock family data
+        </Button>
+        <Button
+          size="small"
+          variant="text"
+          onClick={() => {
+            fetch('/care-plan.json')
+              .then((data) => data.json())
+              .then((carePlan) => setCarePlan(carePlan))
+          }}
+        >
+          Load mock care plan
         </Button>
       </Stack>
     </Stack>
