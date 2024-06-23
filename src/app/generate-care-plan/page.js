@@ -233,11 +233,12 @@ function LoadingState({ texts }) {
         height: '100%',
       }}
     >
-      <img
-        src="/care-plan-generator.gif"
-        alt="Loading..."
-        style={{ width: 150, height: 150 }}
+      <Avatar
+        src={'/care-plan-generator.gif'}
+        alt={'gif'}
+        sx={{ width: 100, height: 100 }}
       />
+
       <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
         <Typography variant="h6" sx={{ mt: 2 }}>
           {texts[index]}
