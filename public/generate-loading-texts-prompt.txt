@@ -1,5 +1,5 @@
 Based on the following loading generation initial text, generate fun and engaging loading texts. 
 
-Text: {QUESTIONS_PLACEHOLDER}
+Text: {{QUESTIONS_PLACEHOLDER}}
 
-Provide 7 engaging and fun loading texts, each on a separate line without any numbering. The texts should be fun, provide a sense of progress, and relate to the characteristics.
+Provide 7 engaging and fun loading texts, each on a separate line without any numbering. The texts should be fun, provide a sense of progress, and relate to the Text.
