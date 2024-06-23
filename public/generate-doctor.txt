@@ -5,5 +5,6 @@ Responses:
 
 2. Brief persona description of the ideal pediatrician that incorporates all the criteria and doctor characteristics.
 3. Name of the doctor that you think best reflects the persona.
-4. Generate an image of a cartoon doctor only that you think best reflects the persona using DALL-E image generation.
+4. Generate an image of a cartoon doctor digital animation style with a vibrant, child-friendly aesthetic. only that you think best reflects the persona using DALL-E image generation.
 5. Create a persona description of the pediatrician based on the criteria and doctor characteristics using the doctor's name.
+
