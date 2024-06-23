@@ -58,6 +58,7 @@ export default function BuildDr() {
       })
         .then((response) => response.json())
         .then((data) => {
+          console.log('API Response data in build-dr:', data)
           if (data.chatCompletion?.choices?.[0]?.message?.content) {
             const content = JSON.parse(
               data.chatCompletion.choices[0].message.content

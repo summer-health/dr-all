@@ -1,131 +1,118 @@
 'use client'
 
-import { useDoctor } from '../../components/context/doctor-context'
-import { useEffect, useState } from 'react'
-import { Box, Typography, Card, CardContent, Avatar } from '@mui/material'
+import { useEffect, useState, useRef } from 'react'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import { useDebug } from '@/components/context/debug-context'
+import { useDoctor } from '@/components/context/doctor-context'
 
-export default function GenerateDr() {
+export default function GenerateDoctor() {
+  const { logData } = useDebug()
   const { questions, setPersona } = useDoctor()
-  const [personaDescription, setPersonaDescription] = useState('')
-  const [avatarUrl, setAvatarUrl] = useState('')
-  const [prompt, setPrompt] = useState('')
+  const [persona, setLocalPersona] = useState(null)
+  const hasGeneratedPersona = useRef(false)
 
   useEffect(() => {
-    if (questions.length > 0) {
-      console.log('Questions collected for persona generation:', questions)
-      fetchPrompt()
-    } else {
-      console.log('No questions found for persona generation.')
+    if (hasGeneratedPersona.current) {
+      return
     }
-  }, [questions])
+    hasGeneratedPersona.current = true
 
-  const fetchPrompt = async () => {
-    try {
-      const response = await fetch('/generate-dr-prompt.txt')
-      const data = await response.text()
-      setPrompt(data)
-      generatePersona(data)
-    } catch (error) {
-      console.error('Error fetching the prompt file:', error)
-    }
+    const generatePersona = async () => {
+      const descriptionPrompt = {
+        role: 'user',
+        content: `Based on the following responses, generate a brief persona description for the ideal pediatrician in JSON format. The JSON should have a Persona object that includes the following fields:
+
+- Name: The name of the pediatrician (string)
+- Job Title: Always "Pediatrician" (string)
+- Description: A one-paragraph description of the pediatrician (string)
+- Friendliness: A description of the pediatrician's friendliness (string)
+- Empathy: A description of the pediatrician's empathy (string)
+- Funniness: A description of the pediatrician's sense of humor (string)
+- Professionalism: A description of the pediatrician's professionalism (string)
+- Communication Style: A description of the pediatrician's communication style (string)
+- Gender: The gender of the pediatrician (string)
+- Ethnicity: The ethnicity of the pediatrician (string)
+
+Based on the provided answers, fill in the respective fields:
+${questions.map((q) => `${q.category}: ${q.answer}`).join(', ')}
+
+Ensure the JSON is properly formatted and includes all the fields. Here is an example of the expected output:
+
+{
+  "Persona": {
+    "Name": "Dr. Alex Lincoln",
+    "Job Title": "Pediatrician",
+    "Description": "Dr. Alex Lincoln is a transgender African American pediatrician known for their calm and soothing presence that seems to naturally put both parents and children at ease. While maintaining their professionalism, Dr. Lincoln perfectly mingles empathy into their interactions, demonstrating an understanding that is both casual and professional. Their serious demeanor is laced with a hint of humor simply breaking the typical stereotype of a 'strict doctor'. Their unique communication style marries medical jargon with layman's terms, ensuring parents are on the same page regarding their child's health. Their professionalism shines forth in a casually refreshing fashion, setting them apart in their field.",
+    "Friendliness": "A calm, soothing presence",
+    "Empathy": "Casually understanding, but professional",
+    "Funniness": "Serious with a hint of humor",
+    "Professionalism": "Professionally casual approach",
+    "Communication Style": "Balanced mix of medical jargon with layman's terms",
+    "Gender": "Transgender",
+    "Ethnicity": "African American"
   }
+}
 
-  const generatePersona = (loadedPrompt) => {
-    const responses = questions
-      .map(
-        (q) =>
-          `Category: ${q.category}\nQuestion: ${q.question}\nAnswer: ${q.answer}`
-      )
-      .join('\n\n')
-    const personaPrompt = loadedPrompt.replace('{{responses}}', responses)
-    console.log('Persona Prompt:', personaPrompt)
-    const messages = [
-      { role: 'system', content: 'Create a detailed doctor persona' },
-      { role: 'user', content: personaPrompt },
-    ]
-    const body = { messages, model: 'gpt-4' }
-    fetch('/api/openai/completion', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {
+Please ensure the response adheres strictly to this structure. Return the result only as a JSON object without any additional text or explanation.`,
+      }
+
+      const messages = [descriptionPrompt]
+      const body = { messages, model: 'gpt-4' }
+
+      try {
+        const response = await fetch('/api/openai/completion', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        })
+        const data = await response.json()
+        console.log('Final API Response data:', data)
         if (data.chatCompletion?.choices?.[0]?.message?.content) {
-          const persona = data.chatCompletion.choices[0].message.content
-          console.log('Generated Persona:', persona)
-          setPersonaDescription(persona)
-          setPersona(persona)
-          generateAvatar(persona)
-        } else {
-          console.error('No content in chat completion response')
-        }
-      })
-      .catch((error) => {
-        console.error('Error generating persona:', error)
-      })
-  }
+          let content
+          try {
+            content = JSON.parse(data.chatCompletion.choices[0].message.content)
+          } catch (error) {
+            console.error('Error parsing JSON:', error)
+            content = {
+              name: 'Error',
+              description: data.chatCompletion.choices[0].message.content,
+            }
+          }
 
-  const generateAvatar = (persona) => {
-    const prompt = `Generate an image of a cartoon doctor that best reflects the following persona: ${persona}`
-    console.log('Avatar Prompt:', prompt)
-    const body = { prompt, size: '1024x1024' }
-    fetch('/api/openai/image', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Image generation response:', data)
-        if (data.url) {
-          console.log('Generated Avatar URL:', data.url)
-          setAvatarUrl(data.url)
-        } else {
-          console.error('No URL in image generation response')
-        }
-      })
-      .catch((error) => {
-        console.error('Error generating avatar:', error)
-      })
-  }
+          logData({
+            id: data.chatCompletion.id,
+            data: content,
+            message: 'Generated doctor description',
+          })
 
-  console.log('Persona Description:', personaDescription)
-  console.log('Avatar URL:', avatarUrl)
+          setPersona(content.Persona)
+          setLocalPersona(content.Persona)
+        }
+      } catch (error) {
+        console.error('Error generating doctor description:', error)
+      }
+    }
+
+    generatePersona()
+  }, [questions, logData, setPersona])
 
   return (
     <Box sx={{ padding: 2 }}>
-      <Typography variant="h4" gutterBottom>
-        Generated Doctor Persona
-      </Typography>
-      {personaDescription ? (
-        <Card variant="outlined">
-          <CardContent>
-            <Typography
-              variant="body1"
-              sx={{ whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}
-            >
-              {personaDescription}
-            </Typography>
-            {avatarUrl && (
-              <Box
-                sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}
-              >
-                <Avatar
-                  alt="Doctor Avatar"
-                  src={avatarUrl}
-                  sx={{ width: 200, height: 200 }}
-                />
-              </Box>
-            )}
-          </CardContent>
-        </Card>
+      {persona ? (
+        <Stack spacing={2}>
+          <Typography variant="h4" component="h1">
+            {persona.Name}
+          </Typography>
+          <Typography variant="body1">{persona.Description}</Typography>
+        </Stack>
       ) : (
-        <Typography variant="body1">No persona generated yet.</Typography>
+        <Typography variant="body1">
+          Generating your ideal pediatrician...
+        </Typography>
       )}
     </Box>
   )
