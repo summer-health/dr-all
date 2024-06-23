@@ -22,18 +22,15 @@ Child Medical Information:
     - Any complications during pregnancy, labor, or delivery
 - **Previous Medical Conditions:**
     - Chronic conditions (asthma, diabetes, etc.)
-    - Past surgeries or hospitalizations
     - Allergies (food, medication, environmental)
 - **Current Medications:**
     - Prescription medications
     - Over-the-counter medications
-    - Vitamins and supplements
 
 ### **3. Developmental History:**
 
 - **Milestones:**
     - Sitting, crawling, walking, talking
-    - Social interactions and play
     - Fine motor skills
 
 ### **4. Immunization Records:**

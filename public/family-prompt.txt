@@ -19,7 +19,7 @@ Question guidelines:
   * Birth date of family member
 * For other questions, provide 5 options for the parent to select from
   * One of the options should be to skip the question
-* Only ask 10 questions about the child medical information, prioritize the information you would collect as a pediatrician
+* Only ask 6 questions about the child medical information, prioritize the information you would collect as a pediatrician
 
 
 
