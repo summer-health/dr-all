@@ -16,7 +16,7 @@ const MAX_QUESTIONS = 3
 export default function BuildCarePlan() {
   const { logData } = useDebug()
   const { questions, addQuestion, setCarePlan } = useCarePlan()
-  const { persona } = useDoctor()
+  const { persona, avatar } = useDoctor()
   const { family } = useFamily()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
@@ -164,9 +164,9 @@ export default function BuildCarePlan() {
       sx={{ width: '100%', padding: 2, height: '100%', paddingTop: 10 }}
     >
       <Stack spacing={2} alignItems="center">
-        {persona && persona.Name && persona.doctorAvatar ? (
+        {persona && persona.Name && avatar ? (
           <Avatar
-            src={persona.doctorAvatar}
+            src={avatar}
             alt={persona.Name}
             sx={{ width: 100, height: 100 }}
           />

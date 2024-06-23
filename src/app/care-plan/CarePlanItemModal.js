@@ -12,7 +12,7 @@ export default function CarePlanItemModal({
   handleCloseModal,
   carePlan,
 }) {
-  const { persona } = useDoctor()
+  const { persona, avatar } = useDoctor()
   return (
     <Modal open={modalOpen} onClose={handleCloseModal}>
       <Box
@@ -28,13 +28,19 @@ export default function CarePlanItemModal({
           p: 4,
         }}
       >
-        {persona?.doctorAvatar && persona.Name && (
-          <Avatar
-            src={persona.doctorAvatar}
-            alt={persona.Name}
-            sx={{ width: 100, height: 100 }}
-          />
-        )}
+        <Stack spacing={2} alignItems="center">
+          {persona && persona.Name && avatar ? (
+            <Avatar
+              src={persona.doctorAvatar}
+              alt={persona.Name}
+              sx={{ width: 100, height: 100 }}
+            />
+          ) : (
+            <Avatar sx={{ width: 100, height: 100 }}>
+              <FaceIcon style={{ fontSize: 60 }} />
+            </Avatar>
+          )}
+        </Stack>
         <Typography
           variant="h6"
           sx={{

@@ -10,20 +10,21 @@ const DoctorContext = createContext()
 export function DoctorProvider({ children }) {
   const [questions, setQuestions] = useState([])
   const [persona, setPersona] = useState(undefined)
+  const [avatar, setAvatar] = useState(load('avatar'))
 
   const addQuestion = (question) => {
     setQuestions((prevQuestions) => [...prevQuestions, question])
   }
 
-  // useEffect(() => {
-  //   if (persona) {
-  //     store('doctorPersona', persona)
-  //   }
-  // }, [persona])
+  useEffect(() => {
+    if (avatar) {
+      store('avatar', avatar)
+    }
+  }, [avatar])
 
   return (
     <DoctorContext.Provider
-      value={{ questions, addQuestion, persona, setPersona }}
+      value={{ questions, addQuestion, persona, setPersona, avatar, setAvatar }}
     >
       {children}
     </DoctorContext.Provider>

@@ -29,7 +29,7 @@ Robin: Child, born April 1, 2024
 
 export default function GenerateCarePlan() {
   const { logData } = useDebug()
-  const { persona } = useDoctor()
+  const { persona, avatar } = useDoctor()
   const { family } = useFamily()
   const { questions, setCarePlan } = useCarePlan()
   const [finalPrompt, setFinalPrompt] = useState(null)
@@ -199,29 +199,7 @@ export default function GenerateCarePlan() {
       justifyContent="center"
       sx={{ width: '100%', padding: 2, height: '100%', paddingTop: 10 }}
     >
-      {isLoading ? (
-        <LoadingState texts={loadingTexts} />
-      ) : (
-        <Stack spacing={2} alignItems="center">
-          {persona && persona.Name && persona.doctorAvatar ? (
-            <Avatar
-              src={persona.doctorAvatar}
-              alt={persona.Name}
-              sx={{ width: 100, height: 100 }}
-            />
-          ) : (
-            <Avatar sx={{ width: 100, height: 100 }}>
-              <FaceIcon style={{ fontSize: 60 }} />
-            </Avatar>
-          )}
-          <Typography variant="h4" component="h1">
-            {persona.Name}
-          </Typography>
-          <Typography variant="body1" sx={{ marginTop: 2 }}>
-            {persona.Introduction}
-          </Typography>
-        </Stack>
-      )}
+      {isLoading && <LoadingState texts={loadingTexts} />}
     </Stack>
   )
 }

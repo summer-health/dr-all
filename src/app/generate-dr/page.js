@@ -24,7 +24,7 @@ const blobToBase64 = (blob) => {
 export default function GenerateDoctor() {
   const router = useRouter()
   const { logData } = useDebug()
-  const { questions, persona, setPersona } = useDoctor()
+  const { questions, persona, setPersona, setAvatar } = useDoctor()
   const [avatarUrl, setAvatarUrl] = useState(null)
   const [promptTemplate, setPromptTemplate] = useState(null)
   const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
@@ -108,13 +108,13 @@ export default function GenerateDoctor() {
             `/api/openai/image?prompt=${encodeURIComponent(avatarPrompt)}`
           )
           const avatarBlob = await avatarResponse.blob()
-          // blobToBase64(avatarBlob)
-          //   .then((base64String) => {
-          //     // setPersona({ ...content.Persona, doctorAvatar: base64String })
-          //   })
-          //   .catch((error) => {
-          //     console.error('Error converting Blob to Base64:', error)
-          //   })
+          blobToBase64(avatarBlob)
+            .then((base64String) => {
+              setAvatar(base64String)
+            })
+            .catch((error) => {
+              console.error('Error converting Blob to Base64:', error)
+            })
           const avatarUrl = URL.createObjectURL(avatarBlob)
 
           // content.Persona['Image Url'] = avatarUrl
