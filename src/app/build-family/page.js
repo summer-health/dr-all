@@ -25,7 +25,7 @@ function FamilyInput({ question, onNext }) {
 
 export default function BuildFamily() {
   const { familyQuestions, addFamilyQuestion } = useFamily()
-  const { persona } = useDoctor()
+  const { persona, avatar } = useDoctor()
   const { logData } = useDebug()
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
@@ -129,9 +129,9 @@ export default function BuildFamily() {
       sx={{ width: '100%', padding: 2, height: '100%', paddingTop: 10 }}
     >
       <Stack spacing={2} alignItems="center" sx={{ width: '100%' }}>
-        {persona?.imageUrl && (
+        {persona && persona.Name && avatar && (
           <Avatar
-            src={persona.imageUrl}
+            src={avatar}
             alt={persona.Name}
             sx={{ width: 100, height: 100 }}
           />
