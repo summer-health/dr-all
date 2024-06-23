@@ -3,11 +3,11 @@
 import { useEffect, useState, useRef } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
-import Grow from '@mui/material/Grow'
 import Avatar from '@mui/material/Avatar'
 import FaceIcon from '@mui/icons-material/Face'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
+import LoadingState from '@/components/loading-page'
 import { store } from '@/libs/localStorage'
 
 const blobToBase64 = (blob) => {
@@ -26,15 +26,12 @@ export default function GenerateDoctor() {
   const [promptTemplate, setPromptTemplate] = useState(null)
   const [loadingTextsTemplate, setLoadingTextsTemplate] = useState(null)
   const [avatarPromptTemplate, setAvatarPromptTemplate] = useState(null)
-  const [loadingTexts, setLoadingTexts] = useState([
-    'Generating your perfect doctor...',
-  ])
   const [isLoading, setIsLoading] = useState(true)
   const hasGeneratedPersona = useRef(false)
   const hasGeneratedLoadingTexts = useRef(false)
 
   useEffect(() => {
-    const fetchPromptTemplate = async () => {
+    const fetchPromptTemplates = async () => {
       try {
         const [generateDoctorPrompt, loadingTextsPrompt, avatarPrompt] =
           await Promise.all([
@@ -52,7 +49,7 @@ export default function GenerateDoctor() {
       }
     }
 
-    fetchPromptTemplate()
+    fetchPromptTemplates()
   }, [])
 
   useEffect(() => {
@@ -97,7 +94,7 @@ export default function GenerateDoctor() {
     }
 
     generateLoadingTexts()
-  }, [questions, loadingTextsTemplate, logData])
+  }, [loadingTextsTemplate, logData])
 
   useEffect(() => {
     if (hasGeneratedPersona.current || !promptTemplate || !avatarPromptTemplate)
@@ -197,7 +194,12 @@ export default function GenerateDoctor() {
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
       {isLoading ? (
-        <LoadingState texts={loadingTexts} />
+        <LoadingState
+          loadingTextsTemplate={loadingTextsTemplate}
+          logData={logData}
+          src="/doctor-generator.gif"
+          initialText="Generating your perfect doctor..."
+        />
       ) : (
         <Stack spacing={2} alignItems="center">
           {avatarUrl ? (
@@ -219,42 +221,6 @@ export default function GenerateDoctor() {
           </Typography>
         </Stack>
       )}
-    </Stack>
-  )
-}
-
-function LoadingState({ texts }) {
-  const [index, setIndex] = useState(0)
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % texts.length)
-    }, 3000)
-
-    return () => clearInterval(interval)
-  }, [texts.length])
-
-  return (
-    <Stack
-      spacing={2}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100%',
-      }}
-    >
-      <img
-        src="/doctor-generator.gif"
-        alt="Loading..."
-        style={{ width: 150, height: 150 }}
-      />
-      <Grow in={true} style={{ transformOrigin: '0 0 0' }} timeout={1000}>
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          {texts[index]}
-        </Typography>
-      </Grow>
     </Stack>
   )
 }
