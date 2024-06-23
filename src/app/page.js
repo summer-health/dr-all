@@ -138,7 +138,7 @@ Robin: Child, born April 1, 2024
 `
 
 export default function Home() {
-  const { persona, setPersona } = useDoctor()
+  const { persona, setPersona, setAvatar } = useDoctor()
   const { family, familyQuestions, setFamilyQuestions, setFamily } = useFamily()
   const router = useRouter()
   return (
@@ -188,7 +188,12 @@ export default function Home() {
         <Button
           size="small"
           variant="text"
-          onClick={() => setPersona(mockDoctorPersona)}
+          onClick={() => {
+            setPersona(mockDoctorPersona)
+            fetch('/dummy-avatar.base64')
+              .then((data) => data.text())
+              .then((avatar) => setAvatar(avatar))
+          }}
         >
           Load mock doctor persona
         </Button>
