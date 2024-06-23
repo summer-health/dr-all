@@ -1,7 +1,7 @@
 'use client'
 
-import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
+import Avatar from '@mui/material/Avatar'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
 import { useDoctor } from '../../components/context/doctor-context'
@@ -107,8 +107,11 @@ export default function BuildDr() {
       sx={{ width: '100%', padding: 2, height: '100%' }}
     >
       <Stack spacing={2} alignItems="center">
-        <FaceIcon style={{ fontSize: '100px' }} />
-
+        <Avatar
+          src={'/generic_avatar.png'}
+          alt={'generic_avatar'}
+          sx={{ width: 100, height: 100 }}
+        />
         {state.currentQuestion && (
           <Select
             question={state.currentQuestion}
