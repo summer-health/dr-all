@@ -5,13 +5,13 @@ return the care plan output in a JSON:
 - **category** (string): reading or reminder or tasks
 - **date_to_complete** (string): care plan due date. format in ISO string e.g 2024-06-23T05:03:20.642Z
 - **content** (string): Content of the care plan
-- **image_prompt** (string): Dall-E image generate prompt. based on the care plan. example: Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. **content**
+- **image_prompt** (string): Dall-E image generate prompt. based on the care plan. example: Create an image for the following care plan item with a video game pixel art. **content**
 
 # example
 
 [
-  {"name":"reading a book", "category": "reading", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "blog post of reading a book", "image_prompt":"Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. blog post of reading a book"},
-  {"name":"give a vaccine", "category": "reminder", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "explanation of the vaccine", "image_prompt":"Create an icon for the following care plan item with a digital animation style with a vibrant, child-friendly aesthetic, with a transparent background. explanation of the vaccine"}
+  {"name":"reading a book", "category": "reading", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "blog post of reading a book", "image_prompt":"Create an image for the following care plan item with a video game pixel art. blog post of reading a book"},
+  {"name":"give a vaccine", "category": "reminder", "date_to_complete": "2024-06-23T05:03:20.642Z", "content": "explanation of the vaccine", "image_prompt":"Create an image for the following care plan item with a video game pixel art. explanation of the vaccine"}
 ]
 
 Questions already asked:

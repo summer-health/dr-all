@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useRef, useState, useCallback } from 'react'
+import React, { useRef, useState, useCallback, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import {
   Plane,
@@ -14,6 +14,7 @@ import { useLoader } from '@react-three/fiber'
 import { Modal, Box, Card, CardContent, Typography } from '@mui/material'
 import CarePlanItemModal from './CarePlanItemModal'
 import { Environment } from '@react-three/drei'
+import { useCarePlan } from '@/components/context/care-plan-context'
 
 function getLabel(value) {
   if (value <= 6 || isNaN(value)) {
@@ -89,7 +90,7 @@ function CarePlanSprite({ position, url, onClick }) {
   )
 }
 
-function Scene({ cameraZ, onItemClick }) {
+function Scene({ cameraZ, onItemClick, items }) {
   const cameraRef = useRef()
 
   useFrame(() => {
@@ -114,15 +115,20 @@ function Scene({ cameraZ, onItemClick }) {
         position={[0, 5, cameraZ]}
       />
       <Road />
-      {[...Array(5)].map((_, index) => {
+      {items.map((carePlan, index) => {
         return (
           <>
             <CarePlanSprite
-              url="/sh-icon.png"
-              position={[-2, 0.7, 0 - index * repeatLength]}
-              onClick={onItemClick}
+              url={
+                [
+                  '/care-plan/childTalking.png',
+                  '/care-plan/speechTherapist.png',
+                ][Math.floor(Math.random() * 2)]
+              }
+              position={[-3, 3, 0 - index * repeatLength]}
+              onClick={() => onItemClick(carePlan)}
             />
-            <CarePlanSprite
+            {/* <CarePlanSprite
               url="/sh-icon.png"
               position={[-1, 0.7, -10 - index * repeatLength]}
               onClick={onItemClick}
@@ -143,7 +149,7 @@ function Scene({ cameraZ, onItemClick }) {
               url="/sh-icon.png"
               position={[-4, 0.7, -56 - index * repeatLength]}
               onClick={onItemClick}
-            />
+            /> */}
           </>
         )
       })}
@@ -157,6 +163,7 @@ export default function CarePlanApp() {
   const [cameraZ, setCameraZ] = useState(10)
   const [rowCount, setRowCount] = useState(1)
   const [modalOpen, setModalOpen] = useState(false)
+  const [selectedCarePlan, setSelectedCarePlan] = useState({})
 
   const handlePointerDown = useCallback((event) => {
     setIsDragging(true)
@@ -184,13 +191,31 @@ export default function CarePlanApp() {
     setOffsets((prevOffsets) => [...prevOffsets, -prevOffsets.length * 100])
   }, [rowCount])
 
-  const handleItemClick = () => {
+  const handleItemClick = (carePlan) => {
+    console.log(carePlan)
+    setSelectedCarePlan(carePlan)
     setModalOpen(true)
   }
 
   const handleCloseModal = () => {
     setModalOpen(false)
   }
+
+  const { carePlan, setCarePlan } = useCarePlan()
+
+  useEffect(() => {
+    const fetchCarePlan = async () => {
+      try {
+        const response = await fetch('/care-plan.json')
+        const data = await response.json()
+        setCarePlan(data)
+      } catch (error) {
+        console.error('Error fetching the json file:', error)
+      }
+    }
+
+    fetchCarePlan()
+  }, [])
 
   return (
     <>
@@ -226,11 +251,13 @@ export default function CarePlanApp() {
           cameraZ={cameraZ}
           addMoreRows={addMoreRows}
           onItemClick={handleItemClick}
+          items={carePlan}
         />
       </Canvas>
       <CarePlanItemModal
         modalOpen={modalOpen}
         handleCloseModal={handleCloseModal}
+        carePlan={selectedCarePlan}
       />
     </>
   )

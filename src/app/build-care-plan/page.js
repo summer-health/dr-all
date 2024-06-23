@@ -4,7 +4,7 @@ import FaceIcon from '@mui/icons-material/Face'
 import Stack from '@mui/material/Stack'
 import Select from '../../components/input/select'
 import { useDebug } from '../../components/context/debug-context'
-
+import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import { useCarePlan } from '@/components/context/care-plan-context'
 
@@ -14,6 +14,7 @@ export default function BuildCarePlan() {
   const [prompt, setPrompt] = useState(undefined)
   const [system, setSystem] = useState(undefined)
   const [state, setState] = useState([])
+  const router = useRouter()
 
   useEffect(() => {
     const fetchPrompt = async () => {
@@ -87,7 +88,7 @@ export default function BuildCarePlan() {
               setCarePlan(contentWithUrl)
               // done
               console.log(contentWithUrl)
-              alert('we are done')
+              router.push('/care-plan')
             } else {
               setState({ ...state, currentQuestion: content })
             }
