@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react'
 import Stack from '@mui/material/Stack'
 import Typography from '@mui/material/Typography'
+import Avatar from '@mui/material/Avatar'
 import Grow from '@mui/material/Grow'
 import { useDebug } from '@/components/context/debug-context'
 import { useDoctor } from '@/components/context/doctor-context'
